@@ -5,73 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ClinicalTrials India — Find Active Trials Near You</title>
 
-<!-- Inter: Professional SaaS-grade typeface (replaces Syne/DM Sans) -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 
 <style>
-/* ═══════════════════════════════════════════════════════
-   DESIGN TOKENS
-   8px spacing scale · Controlled glow · Premium palette
-═══════════════════════════════════════════════════════ */
 :root {
-  /* Backgrounds — deep navy, not pitch black */
   --bg:         #0B0F14;
   --bg-raised:  #111827;
   --surface:    #161D2B;
   --surface-2:  #1C2538;
   --surface-3:  #222E44;
-
-  /* Primary gradient — mint → cyan (Stripe-style) */
   --grad-start: #00FFA3;
   --grad-end:   #00D1FF;
   --grad:       linear-gradient(135deg, var(--grad-start) 0%, var(--grad-end) 100%);
-
-  /* Accent colors */
-  --accent:     #00E8B5;   /* midpoint of gradient for single-color use */
+  --accent:     #00E8B5;
   --accent-dim: rgba(0, 232, 181, 0.12);
   --red:        #F87171;
   --amber:      #FBBF24;
   --blue:       #60A5FA;
   --purple:     #A78BFA;
-
-  /* Typography */
   --text-primary:   #E5E7EB;
   --text-secondary: #9CA3AF;
   --text-tertiary:  #6B7280;
   --text-inverse:   #0B0F14;
-
-  /* Borders */
   --border:       rgba(255, 255, 255, 0.06);
   --border-hover: rgba(255, 255, 255, 0.12);
   --border-focus: rgba(0, 232, 181, 0.4);
-
-  /* Shadows — layered for realism */
   --shadow-sm:  0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
   --shadow-md:  0 4px 16px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
   --shadow-lg:  0 16px 48px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3);
   --shadow-glow:0 0 0 1px rgba(0,232,181,0.15), 0 8px 32px rgba(0,232,181,0.1);
-
-  /* Radii */
   --radius-sm:  6px;
   --radius-md:  10px;
   --radius-lg:  16px;
   --radius-xl:  20px;
   --radius-pill:100px;
-
-  /* Transitions */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --t-fast: 150ms var(--ease);
   --t-base: 250ms var(--ease);
   --t-slow: 400ms var(--ease);
 }
 
-/* ═══════════════════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--text-primary);
@@ -84,63 +59,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ═══════════════════════════════════════════════════════
-   BACKGROUND — Medical atmosphere, not a rave
-═══════════════════════════════════════════════════════ */
 .med-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
 }
-
-/* Subtle dot-grid — Stripe-style */
 .med-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ''; position: absolute; inset: 0;
   background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 32px 32px;
 }
-
-/* Soft ambient glows — corners only, not center */
 .med-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ''; position: absolute; inset: 0;
   background:
     radial-gradient(ellipse 55% 40% at 0% 0%,   rgba(0,255,163,0.055) 0%, transparent 60%),
     radial-gradient(ellipse 50% 40% at 100% 100%,rgba(0,209,255,0.05)  0%, transparent 60%),
     radial-gradient(ellipse 30% 30% at 100% 0%,  rgba(167,139,250,0.03) 0%, transparent 50%);
 }
-
-/* ECG line — bottom strip, very subtle */
-.ecg-wrap {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 120px;
-  opacity: 0.08;
-}
-.ecg-svg {
-  width: 200%;
-  height: 100%;
-  animation: ecgScroll 10s linear infinite;
-}
-@keyframes ecgScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-/* Floating medical crosses — barely visible */
+.ecg-wrap { position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; opacity: 0.08; }
+.ecg-svg { width: 200%; height: 100%; animation: ecgScroll 10s linear infinite; }
+@keyframes ecgScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .float-cross {
-  position: absolute;
-  color: var(--accent);
-  font-weight: 200;
-  animation: floatCross 24s ease-in-out infinite;
-  opacity: 0;
+  position: absolute; color: var(--accent); font-weight: 200;
+  animation: floatCross 24s ease-in-out infinite; opacity: 0;
 }
 .float-cross:nth-child(1) { font-size: 48px; left:  4%; top: 10%; animation-delay: 0s;  opacity: 0.025; }
 .float-cross:nth-child(2) { font-size: 80px; left: 88%; top: 18%; animation-delay: 6s;  opacity: 0.02; }
@@ -148,518 +87,307 @@ body {
 .float-cross:nth-child(4) { font-size: 60px; left: 16%; top: 80%; animation-delay: 18s; opacity: 0.02; }
 .float-cross:nth-child(5) { font-size: 32px; left: 74%; top: 52%; animation-delay: 9s;  opacity: 0.025; }
 @keyframes floatCross {
-  0%, 100% { transform: translateY(0)   rotate(0deg); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
   50%       { transform: translateY(-16px) rotate(6deg); }
 }
 
-/* ═══════════════════════════════════════════════════════
-   LAYOUT
-═══════════════════════════════════════════════════════ */
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 24px;
-  position: relative;
-  z-index: 1;
-}
+.container { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-/* ═══════════════════════════════════════════════════════
-   HEADER — Hero section
-═══════════════════════════════════════════════════════ */
-header {
-  padding: 64px 0 32px;
-  text-align: center;
-}
+header { padding: 64px 0 32px; text-align: center; }
 
-/* Eyebrow badge */
 .top-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(0, 232, 181, 0.08);
-  border: 1px solid rgba(0, 232, 181, 0.2);
-  border-radius: var(--radius-pill);
-  padding: 6px 16px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 24px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0, 232, 181, 0.08); border: 1px solid rgba(0, 232, 181, 0.2);
+  border-radius: var(--radius-pill); padding: 6px 16px;
+  font-size: 11px; font-weight: 600; color: var(--accent);
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px;
   backdrop-filter: blur(8px);
 }
 .pulse-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--grad-start);
-  box-shadow: 0 0 6px var(--grad-start);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--grad-start); box-shadow: 0 0 6px var(--grad-start);
   animation: pulseDot 2.4s ease-in-out infinite;
 }
 @keyframes pulseDot {
-  0%, 100% { opacity: 1;   transform: scale(1);   }
+  0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.4; transform: scale(1.8); }
 }
 
-/* Main heading — clean weight, subtle gradient */
 h1 {
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.08;
-  margin-bottom: 16px;
-  /* Gradient text — gradient goes top-left to bottom-right */
+  font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800;
+  letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 16px;
   background: linear-gradient(135deg, #FFFFFF 20%, var(--grad-start) 55%, var(--grad-end) 85%);
   background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   animation: heroShine 6s ease-in-out infinite alternate;
 }
 @keyframes heroShine {
-  from { background-position: 0%   50%; }
-  to   { background-position: 100% 50%; }
+  from { background-position: 0% 50%; } to { background-position: 100% 50%; }
 }
 
 .subtitle {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-  max-width: 500px;
-  margin: 0 auto 20px;
-  line-height: 1.75;
+  font-size: 1rem; font-weight: 400; color: var(--text-secondary);
+  max-width: 500px; margin: 0 auto 20px; line-height: 1.75;
 }
 
-/* Trust row — small validation chips */
-.trust-row {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-}
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  letter-spacing: 0.03em;
-}
-.trust-icon {
-  color: var(--accent);
-  font-style: normal;
-  font-weight: 700;
-}
+.trust-row { display: flex; justify-content: center; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+.trust-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--text-tertiary); letter-spacing: 0.03em; }
+.trust-icon { color: var(--accent); font-style: normal; font-weight: 700; }
 
-/* ── Language selector ── */
-.lang-selector {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-}
+.lang-selector { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
 .lang-btn {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  padding: 8px 20px;
-  color: var(--text-secondary);
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--t-base);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-pill); padding: 8px 20px;
+  color: var(--text-secondary); font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 500; cursor: pointer; transition: all var(--t-base);
 }
 .lang-btn:hover:not(.active) {
-  background: var(--surface-2);
-  border-color: var(--border-hover);
-  color: var(--text-primary);
-  transform: translateY(-1px);
+  background: var(--surface-2); border-color: var(--border-hover);
+  color: var(--text-primary); transform: translateY(-1px);
 }
 .lang-btn.active {
-  background: var(--accent-dim);
-  border-color: rgba(0, 232, 181, 0.35);
-  color: var(--accent);
-  font-weight: 600;
-  box-shadow: 0 0 16px rgba(0, 232, 181, 0.1);
+  background: var(--accent-dim); border-color: rgba(0, 232, 181, 0.35);
+  color: var(--accent); font-weight: 600; box-shadow: 0 0 16px rgba(0, 232, 181, 0.1);
 }
 
-/* ═══════════════════════════════════════════════════════
-   SEARCH PANEL — Glassmorphism card
-═══════════════════════════════════════════════════════ */
 .search-panel {
-  background: rgba(22, 29, 43, 0.8);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: 28px;
-  margin-bottom: 24px;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
+  background: rgba(22, 29, 43, 0.8); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: 28px; margin-bottom: 24px;
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-md); position: relative; overflow: hidden;
   transition: box-shadow var(--t-base);
 }
-/* Top shimmer line — premium detail */
 .search-panel::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(0,232,181,0.5) 50%, transparent 100%);
 }
-.search-panel:focus-within {
-  box-shadow: var(--shadow-glow);
-}
+.search-panel:focus-within { box-shadow: var(--shadow-glow); }
 
 .search-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  font-size: 11px; font-weight: 600; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
 }
 
-/* Search input row */
-.search-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.input-wrap {
-  flex: 1;
-  min-width: 200px;
-  position: relative;
-}
+.search-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.input-wrap { flex: 1; min-width: 200px; position: relative; }
 .input-wrap input {
-  width: 100%;
-  background: rgba(11, 15, 20, 0.7);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 14px 18px 14px 46px;
-  color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  outline: none;
-  transition: border-color var(--t-base), box-shadow var(--t-base), background var(--t-base);
+  width: 100%; background: rgba(11, 15, 20, 0.7);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: 14px 18px 14px 46px; color: var(--text-primary);
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400;
+  outline: none; transition: border-color var(--t-base), box-shadow var(--t-base), background var(--t-base);
 }
 .input-wrap input::placeholder { color: var(--text-tertiary); }
-.input-wrap input:hover {
-  border-color: var(--border-hover);
-  background: rgba(11, 15, 20, 0.9);
-}
+.input-wrap input:hover { border-color: var(--border-hover); background: rgba(11, 15, 20, 0.9); }
 .input-wrap input:focus {
-  border-color: var(--border-focus);
-  background: rgba(11, 15, 20, 0.9);
+  border-color: var(--border-focus); background: rgba(11, 15, 20, 0.9);
   box-shadow: 0 0 0 3px rgba(0, 232, 181, 0.08);
 }
 .input-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 15px;
-  pointer-events: none;
-  opacity: 0.7;
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 15px; pointer-events: none; opacity: 0.7;
 }
 
-/* Smart AI recognition banner */
 .smart-banner {
-  display: none;
-  align-items: center;
-  gap: 10px;
-  background: rgba(0, 232, 181, 0.06);
-  border: 1px solid rgba(0, 232, 181, 0.18);
-  border-radius: var(--radius-md);
-  padding: 10px 14px;
-  margin-top: 10px;
-  font-size: 13px;
-  animation: fadeSlideIn var(--t-base) var(--ease) both;
+  display: none; align-items: center; gap: 10px;
+  background: rgba(0, 232, 181, 0.06); border: 1px solid rgba(0, 232, 181, 0.18);
+  border-radius: var(--radius-md); padding: 10px 14px; margin-top: 10px;
+  font-size: 13px; animation: fadeSlideIn var(--t-base) var(--ease) both;
 }
 .smart-banner.show { display: flex; }
 @keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); }
 }
 .smart-text { color: var(--text-secondary); flex: 1; }
 .smart-text strong { color: var(--accent); font-weight: 600; }
 .smart-dismiss {
-  background: none;
-  border: none;
-  color: var(--text-tertiary);
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 1;
-  padding: 2px 4px;
-  border-radius: 4px;
+  background: none; border: none; color: var(--text-tertiary); cursor: pointer;
+  font-size: 14px; line-height: 1; padding: 2px 4px; border-radius: 4px;
   transition: color var(--t-fast), background var(--t-fast);
 }
 .smart-dismiss:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
 
-/* Filters row */
-.filter-row {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
+.filter-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
 .filter-row select {
-  background: rgba(11, 15, 20, 0.7);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 10px 12px;
-  color: var(--text-secondary);
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  outline: none;
-  cursor: pointer;
-  flex: 1;
-  min-width: 128px;
+  background: rgba(11, 15, 20, 0.7); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 10px 12px;
+  color: var(--text-secondary); font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 400; outline: none; cursor: pointer;
+  flex: 1; min-width: 128px;
   transition: border-color var(--t-base), color var(--t-base);
   appearance: none;
-  /* Custom dropdown arrow */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 32px;
+  background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
   background-color: rgba(11, 15, 20, 0.7);
 }
 .filter-row select:hover { border-color: var(--border-hover); color: var(--text-primary); }
 .filter-row select:focus { border-color: var(--border-focus); }
 .filter-row select option { background: #1C2538; color: var(--text-primary); }
 
-/* CTA Button — gradient, premium */
 .search-btn {
-  background: var(--grad);
-  color: var(--text-inverse);
-  border: none;
-  border-radius: var(--radius-md);
-  padding: 14px 28px;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  white-space: nowrap;
+  background: var(--grad); color: var(--text-inverse); border: none;
+  border-radius: var(--radius-md); padding: 14px 28px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700;
+  letter-spacing: 0.01em; cursor: pointer; white-space: nowrap;
   transition: transform var(--t-base), box-shadow var(--t-base), opacity var(--t-fast);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
-/* Hover: lift + glow */
 .search-btn:hover {
   transform: translateY(-2px) scale(1.01);
   box-shadow: 0 8px 24px rgba(0, 255, 163, 0.28), 0 4px 12px rgba(0, 209, 255, 0.18);
 }
 .search-btn:active { transform: translateY(0) scale(0.99); }
 .search-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
-
-/* Shimmer on button */
 .search-btn::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%; width: 60%; height: 100%;
+  content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-  transform: skewX(-20deg);
-  transition: none;
+  transform: skewX(-20deg); transition: none;
 }
-.search-btn:hover::after {
-  animation: btnShimmer 0.6s ease forwards;
-}
-@keyframes btnShimmer {
-  from { left: -100%; }
-  to   { left: 160%; }
-}
+.search-btn:hover::after { animation: btnShimmer 0.6s ease forwards; }
+@keyframes btnShimmer { from { left: -100%; } to { left: 160%; } }
 
-/* Quick tags */
 .quick-tags {
-  margin-top: 16px;
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  align-items: center;
+  margin-top: 16px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
 }
-.quick-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-}
+.quick-label { font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.07em; }
 .tag {
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  padding: 4px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  cursor: pointer;
-  transition: all var(--t-base);
+  background: transparent; border: 1px solid var(--border);
+  border-radius: var(--radius-pill); padding: 4px 12px;
+  font-size: 12px; font-weight: 500; color: var(--text-tertiary);
+  cursor: pointer; transition: all var(--t-base);
 }
 .tag:hover {
-  background: var(--accent-dim);
-  border-color: rgba(0, 232, 181, 0.3);
-  color: var(--accent);
-  transform: translateY(-1px);
+  background: var(--accent-dim); border-color: rgba(0, 232, 181, 0.3);
+  color: var(--accent); transform: translateY(-1px);
 }
 
 /* ═══════════════════════════════════════════════════════
    STATUS BAR
 ═══════════════════════════════════════════════════════ */
 .status-bar {
-  display: none;
-  align-items: center;
-  gap: 14px;
-  background: rgba(0, 232, 181, 0.04);
-  border: 1px solid rgba(0, 232, 181, 0.12);
-  border-radius: var(--radius-lg);
-  padding: 14px 20px;
-  margin-bottom: 20px;
+  display: none; align-items: center; gap: 14px;
+  background: rgba(0, 232, 181, 0.04); border: 1px solid rgba(0, 232, 181, 0.12);
+  border-radius: var(--radius-lg); padding: 14px 20px; margin-bottom: 20px;
   animation: fadeSlideIn var(--t-base) ease both;
 }
 .spinner {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(0, 232, 181, 0.15);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.65s linear infinite;
-  flex-shrink: 0;
+  width: 18px; height: 18px; border: 2px solid rgba(0, 232, 181, 0.15);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin 0.65s linear infinite; flex-shrink: 0;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .status-main { font-size: 13px; font-weight: 500; color: var(--accent); }
 .status-sub  { font-size: 12px; color: var(--text-tertiary); margin-top: 1px; }
 
 /* ═══════════════════════════════════════════════════════
-   STATS ROW
+   STATS ROW — India Sites card is now interactive
 ═══════════════════════════════════════════════════════ */
 .stats-row {
-  display: none;
-  gap: 12px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
+  display: none; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;
   animation: fadeSlideIn var(--t-slow) ease both;
 }
 .stat-card {
-  flex: 1;
-  min-width: 110px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform var(--t-base), box-shadow var(--t-base);
+  flex: 1; min-width: 110px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 20px; text-align: center; position: relative; overflow: hidden;
+  transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
 }
-/* Top gradient line */
 .stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--grad);
-  opacity: 0.7;
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--grad); opacity: 0.7;
 }
 .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+/* India Sites card — special interactive state */
+.stat-card.clickable {
+  cursor: pointer;
+}
+.stat-card.clickable:hover {
+  border-color: rgba(0,232,181,0.3);
+  box-shadow: var(--shadow-glow);
+}
+.stat-card.clickable .click-hint {
+  font-size: 10px; color: var(--accent); opacity: 0.7;
+  margin-top: 4px; letter-spacing: 0.05em;
+  transition: opacity var(--t-base);
+}
+.stat-card.clickable:hover .click-hint { opacity: 1; }
+.stat-card.active-filter {
+  background: var(--accent-dim);
+  border-color: rgba(0, 232, 181, 0.4);
+  box-shadow: var(--shadow-glow), 0 0 0 2px rgba(0,232,181,0.15);
+}
+.stat-card.active-filter::before { opacity: 1; }
+.stat-card.active-filter .click-hint { opacity: 1; color: var(--accent); font-weight: 600; }
+
 .stat-num {
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  /* Gradient number */
+  font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1;
   background: var(--grad);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .stat-label {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  margin-top: 6px;
+  font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.07em; margin-top: 6px;
 }
+
+/* India filter active banner */
+.india-filter-banner {
+  display: none; align-items: center; gap: 10px;
+  background: rgba(0,232,181,0.07); border: 1px solid rgba(0,232,181,0.25);
+  border-radius: var(--radius-md); padding: 10px 16px; margin-bottom: 16px;
+  font-size: 13px; font-weight: 500; color: var(--accent);
+  animation: fadeSlideIn var(--t-base) ease both;
+}
+.india-filter-banner.show { display: flex; }
+.india-filter-banner span { flex: 1; }
+.india-filter-close {
+  background: none; border: none; color: var(--text-tertiary); cursor: pointer;
+  font-size: 14px; padding: 2px 6px; border-radius: 4px;
+  transition: color var(--t-fast), background var(--t-fast);
+}
+.india-filter-close:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
 
 /* ═══════════════════════════════════════════════════════
    TRIAL CARDS
 ═══════════════════════════════════════════════════════ */
-.results-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 40px;
-}
+.results-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
 
 .trial-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: 28px;
-  position: relative;
-  overflow: hidden;
-  /* Staggered entrance animation */
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: 28px;
+  position: relative; overflow: hidden;
   animation: cardEnter var(--t-slow) var(--ease) both;
   transition: border-color var(--t-base), transform var(--t-base), box-shadow var(--t-base);
 }
 @keyframes cardEnter {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); }
 }
-/* Hover: float effect */
 .trial-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
+  border-color: var(--border-hover); transform: translateY(-3px); box-shadow: var(--shadow-lg);
 }
-/* Left accent bar on hover */
 .trial-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--grad);
-  border-radius: 2px 0 0 2px;
-  opacity: 0;
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--grad); border-radius: 2px 0 0 2px; opacity: 0;
   transition: opacity var(--t-base);
 }
 .trial-card:hover::before { opacity: 1; }
 
-/* Card header */
-.card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
+/* India-sites highlight on card */
+.trial-card.has-india-sites {
+  border-color: rgba(0,232,181,0.18);
 }
-.card-badges {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: flex-end;
-  flex-shrink: 0;
-}
+.trial-card.has-india-sites::before { opacity: 1; }
 
-/* Phase & status pills */
+.card-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.card-badges { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
+
 .phase-badge {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 3px 10px;
-  border-radius: var(--radius-pill);
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 3px 10px; border-radius: var(--radius-pill);
 }
 .phase-1  { background: rgba(251,191,36,0.1);  color: #FBBF24; border: 1px solid rgba(251,191,36,0.2); }
 .phase-2  { background: rgba(0,232,181,0.1);   color: var(--accent); border: 1px solid rgba(0,232,181,0.2); }
@@ -668,253 +396,119 @@ h1 {
 .phase-na { background: rgba(255,255,255,0.04); color: var(--text-tertiary); border: 1px solid var(--border); }
 
 .status-pill {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 3px 10px;
-  border-radius: var(--radius-pill);
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 3px 10px; border-radius: var(--radius-pill);
 }
 .recruiting     { background: rgba(0,232,181,0.1);  color: var(--accent); border: 1px solid rgba(0,232,181,0.2); }
 .not-recruiting { background: rgba(248,113,113,0.08); color: #F87171; border: 1px solid rgba(248,113,113,0.18); }
 .completed      { background: rgba(255,255,255,0.04); color: var(--text-tertiary); border: 1px solid var(--border); }
 
-.trial-id {
-  font-size: 11px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  color: var(--text-tertiary);
-  margin-bottom: 6px;
-  letter-spacing: 0.04em;
-}
-.trial-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.5;
-  margin-bottom: 0;
-}
+.trial-id { font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; color: var(--text-tertiary); margin-bottom: 6px; letter-spacing: 0.04em; }
+.trial-title { font-size: 15px; font-weight: 600; color: var(--text-primary); line-height: 1.5; }
 
-/* Summary box */
 .summary-box {
-  background: rgba(0, 232, 181, 0.04);
-  border-left: 2px solid var(--accent);
+  background: rgba(0, 232, 181, 0.04); border-left: 2px solid var(--accent);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 14px 16px;
-  margin: 16px 0;
+  padding: 14px 16px; margin: 16px 0;
 }
 .box-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 5px;
 }
 .summary-box .box-label { color: var(--accent); }
-.summary-text {
-  font-size: 13.5px;
-  line-height: 1.75;
-  color: var(--text-secondary);
-}
+.summary-text { font-size: 13.5px; line-height: 1.75; color: var(--text-secondary); }
 
-/* Eligibility box */
 .elig-box {
-  background: rgba(251, 191, 36, 0.04);
-  border: 1px solid rgba(251, 191, 36, 0.12);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  margin-bottom: 16px;
+  background: rgba(251, 191, 36, 0.04); border: 1px solid rgba(251, 191, 36, 0.12);
+  border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 16px;
 }
 .elig-box .box-label { color: #FBBF24; }
 .elig-list { display: flex; flex-direction: column; gap: 7px; }
-.elig-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
+.elig-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 .ei { font-size: 10px; flex-shrink: 0; margin-top: 3px; font-weight: 700; }
 .ei.ok { color: var(--accent); }
 .ei.no { color: var(--red); }
 .more-note { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; padding-left: 18px; }
 
-/* Meta grid */
-.meta-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 8px;
-  margin-bottom: 16px;
-}
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 16px; }
 .meta-item {
-  background: var(--bg-raised);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 12px 14px;
   transition: border-color var(--t-base);
 }
 .meta-item:hover { border-color: var(--border-hover); }
-.meta-key {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 4px;
-}
-.meta-val {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-primary);
-}
+.meta-key { font-size: 10px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.meta-val { font-size: 13px; font-weight: 500; color: var(--text-primary); }
 
-/* Location tags */
-.locations-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 16px;
-}
+/* India sites section inside card — highlighted when filter is active */
+.locations-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 .loc-tag {
-  background: rgba(96, 165, 250, 0.06);
-  border: 1px solid rgba(96, 165, 250, 0.15);
-  border-radius: var(--radius-sm);
-  padding: 3px 10px;
-  font-size: 12px;
-  color: var(--blue);
+  background: rgba(96, 165, 250, 0.06); border: 1px solid rgba(96, 165, 250, 0.15);
+  border-radius: var(--radius-sm); padding: 3px 10px; font-size: 12px; color: var(--blue);
+}
+/* Pop the location tags when India filter is active */
+.india-filter-active .loc-tag {
+  background: rgba(0,232,181,0.08); border-color: rgba(0,232,181,0.25);
+  color: var(--accent);
 }
 
-/* Card action buttons */
 .card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-
 .btn-primary-sm {
-  flex: 1;
-  min-width: 120px;
-  background: var(--grad);
-  border: none;
-  border-radius: var(--radius-md);
-  padding: 10px 16px;
-  color: var(--text-inverse);
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1; min-width: 120px; background: var(--grad); border: none;
+  border-radius: var(--radius-md); padding: 10px 16px;
+  color: var(--text-inverse); font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  text-align: center; text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center;
   transition: transform var(--t-base), box-shadow var(--t-base);
 }
-.btn-primary-sm:hover {
-  transform: translateY(-1px) scale(1.01);
-  box-shadow: 0 6px 20px rgba(0,255,163,0.22);
-}
+.btn-primary-sm:hover { transform: translateY(-1px) scale(1.01); box-shadow: 0 6px 20px rgba(0,255,163,0.22); }
 .btn-primary-sm:active { transform: translateY(0) scale(0.99); }
-
 .btn-outline {
-  flex: 1;
-  min-width: 120px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 10px 16px;
-  color: var(--text-secondary);
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1; min-width: 120px; background: transparent; border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 10px 16px;
+  color: var(--text-secondary); font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  text-align: center; text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center;
   transition: all var(--t-base);
 }
-.btn-outline:hover {
-  background: rgba(255,255,255,0.04);
-  border-color: var(--border-hover);
-  color: var(--text-primary);
-  transform: translateY(-1px);
-}
+.btn-outline:hover { background: rgba(255,255,255,0.04); border-color: var(--border-hover); color: var(--text-primary); transform: translateY(-1px); }
 
-/* ═══════════════════════════════════════════════════════
-   EMPTY STATE
-═══════════════════════════════════════════════════════ */
-.empty-state {
-  display: none;
-  text-align: center;
-  padding: 72px 24px;
-  animation: fadeSlideIn var(--t-slow) ease both;
-}
+.empty-state { display: none; text-align: center; padding: 72px 24px; animation: fadeSlideIn var(--t-slow) ease both; }
 .empty-icon  { font-size: 3rem; margin-bottom: 16px; display: block; opacity: 0.8; }
 .empty-title { font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
 .empty-hint  { font-size: 14px; color: var(--text-secondary); line-height: 1.7; max-width: 380px; margin: 0 auto; }
 
-/* ═══════════════════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════════════════ */
 .toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: var(--surface-3);
-  border: 1px solid rgba(0, 232, 181, 0.25);
-  border-radius: var(--radius-lg);
-  padding: 12px 20px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--accent);
-  box-shadow: var(--shadow-lg);
-  z-index: 999;
-  transform: translateY(80px) scale(0.96);
-  opacity: 0;
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--surface-3); border: 1px solid rgba(0, 232, 181, 0.25);
+  border-radius: var(--radius-lg); padding: 12px 20px;
+  font-size: 13px; font-weight: 500; color: var(--accent);
+  box-shadow: var(--shadow-lg); z-index: 999;
+  transform: translateY(80px) scale(0.96); opacity: 0;
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .toast.show { transform: translateY(0) scale(1); opacity: 1; }
 
-/* ═══════════════════════════════════════════════════════
-   DISCLAIMER & FOOTER
-═══════════════════════════════════════════════════════ */
 .disclaimer {
-  background: rgba(248, 113, 113, 0.04);
-  border: 1px solid rgba(248, 113, 113, 0.14);
-  border-radius: var(--radius-lg);
-  padding: 16px 20px;
-  margin: 24px 0;
-  font-size: 12.5px;
-  color: #FDA4AF;
-  line-height: 1.7;
+  background: rgba(248, 113, 113, 0.04); border: 1px solid rgba(248, 113, 113, 0.14);
+  border-radius: var(--radius-lg); padding: 16px 20px; margin: 24px 0;
+  font-size: 12.5px; color: #FDA4AF; line-height: 1.7;
 }
 .disclaimer strong { font-weight: 600; }
 
 footer {
-  text-align: center;
-  padding: 40px 20px;
-  border-top: 1px solid var(--border);
-  color: var(--text-tertiary);
-  font-size: 12.5px;
-  line-height: 2;
+  text-align: center; padding: 40px 20px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary);
+  font-size: 12.5px; line-height: 2;
 }
 footer strong { color: var(--accent); font-weight: 600; }
 .footer-sub { color: #374151; margin-top: 6px; font-size: 11px; display: block; }
 
-/* ═══════════════════════════════════════════════════════
-   DIVIDER between sections
-═══════════════════════════════════════════════════════ */
-.section-divider {
-  width: 100%;
-  height: 1px;
-  background: var(--border);
-  margin: 4px 0 20px;
-}
+.section-divider { width: 100%; height: 1px; background: var(--border); margin: 4px 0 20px; }
 
-/* ═══════════════════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
   header          { padding: 40px 0 24px; }
   h1              { font-size: 1.85rem; }
@@ -928,26 +522,19 @@ footer strong { color: var(--accent); font-weight: 600; }
   .trial-card     { padding: 20px 18px; }
   .container      { padding: 0 16px; }
 }
-
 @media (max-width: 400px) {
   .meta-grid      { grid-template-columns: 1fr; }
   .card-actions   { flex-direction: column; }
-  .btn-primary-sm,
-  .btn-outline    { min-width: unset; }
+  .btn-primary-sm, .btn-outline { min-width: unset; }
 }
 
-/* ═══════════════════════════════════════════════════════
-   UTILITY — Fade animation
-═══════════════════════════════════════════════════════ */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 <body>
 
-<!-- ══ Medical Background ══ -->
 <div class="med-bg" aria-hidden="true">
   <span class="float-cross">✚</span>
   <span class="float-cross">✚</span>
@@ -968,31 +555,23 @@ footer strong { color: var(--accent); font-weight: 600; }
   </div>
 </div>
 
-<!-- ══ App Shell ══ -->
 <div class="container">
 
-  <!-- Header -->
   <header>
     <div class="top-badge">
       <span class="pulse-dot"></span>
       🇮🇳 India Clinical Trials · Live Data
     </div>
-
     <h1 id="mainTitle">ClinicalTrials India Finder</h1>
-
     <p class="subtitle" id="subtitleText">
       Search active clinical trials across India — even if you don't know the exact medical term. Built for every Indian patient.
     </p>
-
-    <!-- Trust signals -->
     <div class="trust-row" role="list">
       <span class="trust-item" role="listitem"><i class="trust-icon">✓</i> NIH Verified Data</span>
       <span class="trust-item" role="listitem"><i class="trust-icon">✓</i> Smart Search</span>
       <span class="trust-item" role="listitem"><i class="trust-icon">✓</i> 3 Languages</span>
       <span class="trust-item" role="listitem"><i class="trust-icon">✓</i> Always Free</span>
     </div>
-
-    <!-- Language selector -->
     <div class="lang-selector" role="group" aria-label="Language selector">
       <button class="lang-btn active" onclick="setLang('en')" id="btn-en" aria-pressed="true">🇬🇧 English</button>
       <button class="lang-btn" onclick="setLang('kn')" id="btn-kn" aria-pressed="false">🇮🇳 ಕನ್ನಡ</button>
@@ -1000,37 +579,26 @@ footer strong { color: var(--accent); font-weight: 600; }
     </div>
   </header>
 
-  <!-- Search Panel -->
   <div class="search-panel" role="search">
     <div class="search-label">
       🔬 <span id="searchLabelText">Search by disease, symptom, or condition — in any language</span>
     </div>
-
     <div class="search-row">
       <div class="input-wrap">
         <span class="input-icon" aria-hidden="true">🩺</span>
-        <input
-          type="text"
-          id="diseaseInput"
+        <input type="text" id="diseaseInput"
           placeholder="e.g. sugar disease, high bp, chest pain, kshay, TB..."
-          aria-label="Search disease or symptom"
-          autocomplete="off"
-          spellcheck="false"
-        />
+          aria-label="Search disease or symptom" autocomplete="off" spellcheck="false"/>
       </div>
       <button class="search-btn" onclick="searchTrials()" id="searchBtn" aria-label="Search clinical trials">
         Search Trials
       </button>
     </div>
-
-    <!-- Smart recognition banner -->
     <div class="smart-banner" id="smartBanner" role="status" aria-live="polite">
       <span aria-hidden="true">🧠</span>
       <span class="smart-text" id="smartText"></span>
       <button class="smart-dismiss" onclick="document.getElementById('smartBanner').classList.remove('show')" aria-label="Dismiss">✕</button>
     </div>
-
-    <!-- Filters -->
     <div class="filter-row">
       <select id="statusFilter" aria-label="Filter by recruitment status">
         <option value="RECRUITING">Recruiting Now</option>
@@ -1051,8 +619,6 @@ footer strong { color: var(--accent); font-weight: 600; }
         <option value="20">Show 20</option>
       </select>
     </div>
-
-    <!-- Quick search tags -->
     <div class="quick-tags" role="group" aria-label="Quick search suggestions">
       <span class="quick-label" id="quickLabel">Quick:</span>
       <span class="tag" onclick="quickSearch('Diabetes')"     role="button" tabindex="0">🩸 Sugar / Diabetes</span>
@@ -1066,7 +632,6 @@ footer strong { color: var(--accent); font-weight: 600; }
     </div>
   </div>
 
-  <!-- Status bar -->
   <div class="status-bar" id="statusBar" role="status" aria-live="polite">
     <div class="spinner" aria-hidden="true"></div>
     <div>
@@ -1075,7 +640,6 @@ footer strong { color: var(--accent); font-weight: 600; }
     </div>
   </div>
 
-  <!-- Stats -->
   <div class="stats-row" id="statsRow" role="region" aria-label="Search results summary">
     <div class="stat-card">
       <div class="stat-num"   id="statTotal">0</div>
@@ -1085,49 +649,51 @@ footer strong { color: var(--accent); font-weight: 600; }
       <div class="stat-num"   id="statRecruiting">0</div>
       <div class="stat-label" id="statLabel2">Recruiting Now</div>
     </div>
-    <div class="stat-card">
+    <!-- India Sites card — clickable filter -->
+    <div class="stat-card clickable" id="indiaSitesCard"
+         onclick="toggleIndiaFilter()"
+         role="button" tabindex="0"
+         aria-label="Filter by India sites"
+         title="Click to show only trials with sites in India">
       <div class="stat-num"   id="statSites">0</div>
       <div class="stat-label" id="statLabel3">India Sites</div>
+      <div class="click-hint" id="indiaSitesHint">Click to filter ↑</div>
     </div>
   </div>
 
-  <!-- Empty state -->
+  <!-- India filter active banner -->
+  <div class="india-filter-banner" id="indiaFilterBanner" role="status" aria-live="polite">
+    <span>📍 Showing only trials with <strong>confirmed India sites</strong></span>
+    <button class="india-filter-close" onclick="clearIndiaFilter()" aria-label="Clear India filter">✕ Clear</button>
+  </div>
+
   <div class="empty-state" id="emptyState" role="status">
     <span class="empty-icon" aria-hidden="true">🔭</span>
     <div class="empty-title" id="emptyTitle">No trials found</div>
     <p class="empty-hint"    id="emptyText">Try a symptom like "chest pain" or use the quick tags above</p>
   </div>
 
-  <!-- Results -->
   <div class="results-grid" id="resultsGrid" role="list" aria-label="Clinical trial results"></div>
 
-  <!-- Disclaimer -->
   <div class="disclaimer" id="disclaimerBox" role="note">
     <strong>⚠️ Medical Disclaimer:</strong> This tool is for informational purposes only.
     Always consult a qualified physician before enrolling in any clinical trial.
     Data sourced from ClinicalTrials.gov (NIH, USA).
   </div>
 
-  <!-- Footer -->
   <footer>
-    Built by <strong>Dr. Manoj D H</strong> · Senior Proposal Associate, Labcorp Drug Development · IIM Indore EPHM '26<br/>
+    Built by <strong>Dr. Manoj D H</strong> · Pharm.D · IIM Indore EPHM '26<br/>
     Data: <strong>ClinicalTrials.gov</strong> (NIH/NLM) · Open Source · No data stored or tracked
     <span class="footer-sub">github.com/manudh7676-web/clinicaltrials-india</span>
   </footer>
 
-</div><!-- /container -->
+</div>
 
-<!-- Toast notification -->
 <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
 
-<!-- ══════════════════════════════════════════════════════
-     JAVASCRIPT — All logic preserved exactly
-══════════════════════════════════════════════════════ -->
 <script>
 /* ══════════════════════════════════════════════════════
    SMART MEDICAL SEARCH ENGINE
-   Handles: typos · slang · regional names · symptoms
-            abbreviations · delimiters · extra spaces
 ══════════════════════════════════════════════════════ */
 const MEDICAL_MAP = [
   {terms:['diabetes','diabetis','diabeties','diabtes','diabetese','diabeetus','dibaetes','sugar disease','sugar','high sugar','blood sugar','sweet disease','sugar ki bimari','madhumeh','madhumeha','मधुमेह','ಮಧುಮೇಹ','high glucose','glucose problem','insulin','type 1','type 2','type1','type2','t2dm','t1dm','dm2','dm1','hyperglycemia','diabetic','diabetics'],canonical:'Diabetes'},
@@ -1212,7 +778,9 @@ const LANG={
     statusSub:'Connecting to ClinicalTrials.gov (NIH)',
     smartMsg:(o,f)=>`We understood <strong>"${o}"</strong> as <strong>${f}</strong> and searched for it.`,
     disclaimer:'<strong>⚠️ Medical Disclaimer:</strong> This tool is for informational purposes only. Always consult a qualified physician before enrolling in any clinical trial. Data sourced from ClinicalTrials.gov (NIH, USA).',
-    moreElig:'+ more criteria on the full trial page'
+    moreElig:'+ more criteria on the full trial page',
+    indiaFilterOn:'Showing only trials with confirmed India sites',
+    indiaFilterOff:'Showing all trials'
   },
   kn:{
     subtitle:'ಭಾರತದಾದ್ಯಂತ ಸಕ್ರಿಯ ಕ್ಲಿನಿಕಲ್ ಟ್ರಯಲ್‌ಗಳನ್ನು ಹುಡುಕಿ — ನಿಖರ ವೈದ್ಯಕೀಯ ಪದ ತಿಳಿಯದಿದ್ದರೂ ಸರಿ.',
@@ -1227,7 +795,9 @@ const LANG={
     statusSub:'ClinicalTrials.gov ಗೆ ಸಂಪರ್ಕ ಮಾಡಲಾಗುತ್ತಿದೆ',
     smartMsg:(o,f)=>`<strong>"${o}"</strong> ಅನ್ನು <strong>${f}</strong> ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ.`,
     disclaimer:'<strong>⚠️ ವೈದ್ಯಕೀಯ ಎಚ್ಚರಿಕೆ:</strong> ಯಾವುದೇ ಟ್ರಯಲ್‌ನಲ್ಲಿ ಭಾಗವಹಿಸುವ ಮೊದಲು ತಜ್ಞ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.',
-    moreElig:'+ ಹೆಚ್ಚಿನ ಮಾನದಂಡ ಟ್ರಯಲ್ ಪೇಜ್‌ನಲ್ಲಿ ನೋಡಿ'
+    moreElig:'+ ಹೆಚ್ಚಿನ ಮಾನದಂಡ ಟ್ರಯಲ್ ಪೇಜ್‌ನಲ್ಲಿ ನೋಡಿ',
+    indiaFilterOn:'ಭಾರತದಲ್ಲಿ ತಾಣಗಳಿರುವ ಟ್ರಯಲ್‌ಗಳು ಮಾತ್ರ',
+    indiaFilterOff:'ಎಲ್ಲಾ ಟ್ರಯಲ್‌ಗಳು'
   },
   hi:{
     subtitle:'पूरे भारत में क्लिनिकल ट्रायल खोजें — सही मेडिकल शब्द न पता हो तो भी चलेगा।',
@@ -1242,11 +812,15 @@ const LANG={
     statusSub:'ClinicalTrials.gov से जुड़ा जा रहा है',
     smartMsg:(o,f)=>`<strong>"${o}"</strong> को <strong>${f}</strong> समझा गया।`,
     disclaimer:'<strong>⚠️ चिकित्सा अस्वीकरण:</strong> किसी भी ट्रायल में शामिल होने से पहले योग्य चिकित्सक से परामर्श लें।',
-    moreElig:'+ और मानदंड ट्रायल पेज पर देखें'
+    moreElig:'+ और मानदंड ट्रायल पेज पर देखें',
+    indiaFilterOn:'केवल भारत में स्थान वाले ट्रायल दिखाए जा रहे हैं',
+    indiaFilterOff:'सभी ट्रायल दिखाए जा रहे हैं'
   }
 };
 
 let currentLang='en';
+let allStudies=[]; // global store for India Sites filter
+let indiaFilterActive=false;
 
 function setLang(lang){
   currentLang=lang;
@@ -1265,7 +839,7 @@ function setLang(lang){
   ['en','kn','hi'].forEach(l=>{
     const btn=document.getElementById(`btn-${l}`);
     btn.classList.toggle('active',l===lang);
-    btn.setAttribute('aria-pressed', l===lang ? 'true' : 'false');
+    btn.setAttribute('aria-pressed', l===lang?'true':'false');
   });
 }
 
@@ -1357,6 +931,7 @@ function renderCard(trial,index){
   const ctUrl=`https://clinicaltrials.gov/study/${id}`;
   const summary=simplifySummary(rawBrief)||'See the full trial page for details.';
   const elig=parseEligibility(rawElig);
+  const hasIndiaSites=locations.length>0;
 
   let eligHTML='';
   if(elig.inclusion.length||elig.exclusion.length){
@@ -1367,9 +942,10 @@ function renderCard(trial,index){
   }
 
   const card=document.createElement('div');
-  card.className='trial-card';
+  card.className='trial-card'+(hasIndiaSites?' has-india-sites':'');
   card.setAttribute('role','listitem');
   card.style.animationDelay=`${index*0.06}s`;
+  card.dataset.hasIndiaSites=hasIndiaSites?'1':'0';
   card.innerHTML=`
     <div class="card-top">
       <div style="flex:1;min-width:0">
@@ -1390,9 +966,9 @@ function renderCard(trial,index){
       <div class="meta-item"><div class="meta-key">Sponsor</div><div class="meta-val">${sponsor.length>34?sponsor.slice(0,34)+'…':sponsor}</div></div>
       <div class="meta-item"><div class="meta-key">Participants</div><div class="meta-val">${enrollment}</div></div>
       <div class="meta-item"><div class="meta-key">Start Date</div><div class="meta-val">${startDate}</div></div>
-      <div class="meta-item"><div class="meta-key">India Sites</div><div class="meta-val">${locations.length>0?locations.length+' site(s)':'See trial page'}</div></div>
+      <div class="meta-item"><div class="meta-key">India Sites</div><div class="meta-val">${hasIndiaSites?locations.length+' site(s)':'See trial page'}</div></div>
     </div>
-    ${locations.length>0?`<div class="locations-list">${locations.map(l=>`<span class="loc-tag">📍 ${l}</span>`).join('')}</div>`:''}
+    ${hasIndiaSites?`<div class="locations-list">${locations.map(l=>`<span class="loc-tag">📍 ${l}</span>`).join('')}</div>`:''}
     <div class="card-actions">
       <a href="${ctUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary-sm">${L.viewTrial}</a>
       <button class="btn-outline" onclick="copyTrial('${id}','${title.replace(/'/g,"\\'").replace(/"/g,'&quot;')}','${ctUrl}')">${L.copyBtn}</button>
@@ -1400,6 +976,67 @@ function renderCard(trial,index){
   return card;
 }
 
+/* ══════════════════════════════════════════════════════
+   INDIA SITES FILTER
+══════════════════════════════════════════════════════ */
+function toggleIndiaFilter(){
+  if(!allStudies.length){ showToast('Search for trials first'); return; }
+  indiaFilterActive=!indiaFilterActive;
+  applyIndiaFilter();
+}
+
+function clearIndiaFilter(){
+  indiaFilterActive=false;
+  applyIndiaFilter();
+}
+
+function applyIndiaFilter(){
+  const L=LANG[currentLang];
+  const card=document.getElementById('indiaSitesCard');
+  const banner=document.getElementById('indiaFilterBanner');
+  const hint=document.getElementById('indiaSitesHint');
+  const grid=document.getElementById('resultsGrid');
+
+  card.classList.toggle('active-filter', indiaFilterActive);
+  card.setAttribute('aria-pressed', indiaFilterActive?'true':'false');
+  banner.classList.toggle('show', indiaFilterActive);
+  hint.textContent = indiaFilterActive ? '✕ Clear filter' : 'Click to filter ↑';
+
+  // Also apply class to grid for CSS cascade (loc-tag color change)
+  grid.classList.toggle('india-filter-active', indiaFilterActive);
+
+  // Show/hide cards
+  const cards=grid.querySelectorAll('.trial-card');
+  let visibleCount=0;
+  cards.forEach(c=>{
+    const hasIndia=c.dataset.hasIndiaSites==='1';
+    if(!indiaFilterActive||hasIndia){
+      c.style.display=''; visibleCount++;
+    } else {
+      c.style.display='none';
+    }
+  });
+
+  if(indiaFilterActive){
+    showToast(`📍 ${visibleCount} trial${visibleCount!==1?'s':''} with India sites`);
+  } else {
+    showToast(`Showing all ${allStudies.length} trials`);
+  }
+
+  // Show empty state if nothing matches
+  const emptyState=document.getElementById('emptyState');
+  if(indiaFilterActive && visibleCount===0){
+    emptyState.style.display='block';
+    document.getElementById('emptyTitle').textContent='No trials with India sites';
+    document.getElementById('emptyText').textContent='These trials may not have confirmed India locations in their registry data.';
+  } else {
+    emptyState.style.display='none';
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   COPY UTILITY
+══════════════════════════════════════════════════════ */
 function copyTrial(id,title,url){
   navigator.clipboard.writeText(`Clinical Trial: ${title}\nID: ${id}\nLink: ${url}`)
     .then(()=>showToast('✅ Copied to clipboard!'))
@@ -1412,6 +1049,14 @@ async function searchTrials(){
   const L=LANG[currentLang];
   const rawInput=document.getElementById('diseaseInput').value.trim();
   if(!rawInput){showToast('Please type a disease or symptom');return;}
+
+  // Reset India filter on new search
+  indiaFilterActive=false;
+  allStudies=[];
+  document.getElementById('indiaSitesCard').classList.remove('active-filter');
+  document.getElementById('indiaFilterBanner').classList.remove('show');
+  document.getElementById('indiaSitesHint').textContent='Click to filter ↑';
+  document.getElementById('resultsGrid').classList.remove('india-filter-active');
 
   const resolved=smartResolve(rawInput);
   const searchTerm=resolved.canonical;
@@ -1458,6 +1103,9 @@ async function searchTrials(){
       btn.disabled=false; btn.textContent=L.btn; return;
     }
 
+    // Store globally for India Sites filter
+    allStudies=studies;
+
     const recruiting=studies.filter(s=>s.protocolSection?.statusModule?.overallStatus==='RECRUITING').length;
     const indiaSites=studies.flatMap(s=>(s.protocolSection?.contactsLocationsModule?.locations||[]).filter(l=>l.country==='India')).length;
     document.getElementById('statTotal').textContent=studies.length;
@@ -1476,7 +1124,7 @@ async function searchTrials(){
   btn.disabled=false; btn.textContent=L.btn;
 }
 
-/* Keyboard support for quick tags */
+/* Keyboard support */
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('diseaseInput').addEventListener('keydown',e=>{
     if(e.key==='Enter') searchTrials();
@@ -1485,6 +1133,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     tag.addEventListener('keydown',e=>{
       if(e.key==='Enter'||e.key===' ') e.currentTarget.click();
     });
+  });
+  // Keyboard support for India Sites card
+  document.getElementById('indiaSitesCard').addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleIndiaFilter(); }
   });
 });
 </script>
