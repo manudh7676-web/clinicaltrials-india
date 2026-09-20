@@ -2,1143 +2,1348 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ClinicalTrials India — Find Active Trials Near You</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>ClinicalTrials India Finder — find clinical trials recruiting in India</title>
+<meta name="description" content="Search clinical trials recruiting in India in English, Kannada or Hindi. See eligibility, hospitals, cities and study contacts from ClinicalTrials.gov."/>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Kannada:wght@400;500;600&display=swap" rel="stylesheet"/>
 
 <style>
-:root {
-  --bg:         #0B0F14;
-  --bg-raised:  #111827;
-  --surface:    #161D2B;
-  --surface-2:  #1C2538;
-  --surface-3:  #222E44;
-  --grad-start: #00FFA3;
-  --grad-end:   #00D1FF;
-  --grad:       linear-gradient(135deg, var(--grad-start) 0%, var(--grad-end) 100%);
-  --accent:     #00E8B5;
-  --accent-dim: rgba(0, 232, 181, 0.12);
-  --red:        #F87171;
-  --amber:      #FBBF24;
-  --blue:       #60A5FA;
-  --purple:     #A78BFA;
-  --text-primary:   #E5E7EB;
-  --text-secondary: #9CA3AF;
-  --text-tertiary:  #6B7280;
-  --text-inverse:   #0B0F14;
-  --border:       rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.12);
-  --border-focus: rgba(0, 232, 181, 0.4);
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
-  --shadow-md:  0 4px 16px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
-  --shadow-lg:  0 16px 48px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3);
-  --shadow-glow:0 0 0 1px rgba(0,232,181,0.15), 0 8px 32px rgba(0,232,181,0.1);
-  --radius-sm:  6px;
-  --radius-md:  10px;
-  --radius-lg:  16px;
-  --radius-xl:  20px;
-  --radius-pill:100px;
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --t-fast: 150ms var(--ease);
-  --t-base: 250ms var(--ease);
-  --t-slow: 400ms var(--ease);
+/* ══ Tokens ════════════════════════════════════════════════
+   Paper-and-ink, not dashboard. This page is read on a cheap
+   Android phone, in sunlight, often by a patient's son or
+   daughter, and it gets printed and carried to a doctor.
+   High contrast and large type beat neon every time.        */
+:root{
+  --paper:#FBFAF6;
+  --card:#FFFFFF;
+  --ink:#16181C;
+  --ink-2:#4A4F57;
+  --ink-3:#767B83;
+  --rule:#E3E0D8;
+  --rule-2:#CFCBC0;
+
+  /* Signal colours — each one means exactly one thing */
+  --open:#0E6E3E;        /* recruiting          */
+  --open-bg:#E9F4ED;
+  --soon:#8A5A00;        /* not yet recruiting  */
+  --soon-bg:#FBF2E0;
+  --shut:#8C3A2E;        /* closed / finished   */
+  --shut-bg:#F8ECE9;
+  --site:#14487A;        /* places, contacts    */
+  --site-bg:#EAF1F8;
+
+  --focus:#14487A;
+  --r-sm:4px; --r-md:8px; --r-lg:12px;
+  --shadow:0 1px 2px rgba(22,24,28,.06), 0 4px 14px rgba(22,24,28,.05);
+  --sans:'Noto Sans','Noto Sans Devanagari','Noto Sans Kannada',system-ui,-apple-system,sans-serif;
+  --serif:'Literata',Georgia,'Times New Roman',serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#14161A; --card:#1B1E24; --ink:#EDEDEA; --ink-2:#B6BAC1; --ink-3:#8A8F98;
+    --rule:#2C3037; --rule-2:#3C424B;
+    --open:#5FD39A; --open-bg:#14291F;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+    --soon:#E8B765; --soon-bg:#2B2313;
+    --shut:#E79185; --shut-bg:#2C1A17;
+    --site:#82B6EE; --site-bg:#152537;
+    --focus:#82B6EE;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14161A; --card:#1B1E24; --ink:#EDEDEA; --ink-2:#B6BAC1; --ink-3:#8A8F98;
+  --rule:#2C3037; --rule-2:#3C424B;
+  --open:#5FD39A; --open-bg:#14291F;
+  --soon:#E8B765; --soon-bg:#2B2313;
+  --shut:#E79185; --shut-bg:#2C1A17;
+  --site:#82B6EE; --site-bg:#152537;
+  --focus:#82B6EE;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
 }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  min-height: 100vh;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-padding-top:calc(env(safe-area-inset-top,0px) + 12px);
+}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.6;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{max-width:760px; margin:0 auto; padding:0 20px}
+
+/* ══ Masthead ═════════════════════════════════════════════ */
+.top{
+  border-bottom:1px solid var(--rule);
+  background:var(--card);
+  position:sticky; top:0; z-index:20;
+  padding-top:env(safe-area-inset-top,0px);
+}
+.top-in{display:flex; align-items:center; gap:12px; padding:10px 20px; max-width:760px; margin:0 auto}
+.mark{font-family:var(--serif); font-size:17px; font-weight:600; letter-spacing:-.01em; margin-right:auto}
+.mark span{color:var(--ink-3); font-family:var(--sans); font-size:11px; font-weight:500; letter-spacing:.02em}
+.langs{display:flex; gap:4px}
+.lang{
+  border:1px solid var(--rule-2); background:transparent; color:var(--ink-2);
+  font-family:var(--sans); font-size:13px; font-weight:500;
+  padding:6px 11px; border-radius:var(--r-sm); cursor:pointer; min-height:36px;
+}
+.lang[aria-pressed="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.theme-btn{
+  border:1px solid var(--rule-2); background:transparent; color:var(--ink-2);
+  border-radius:var(--r-sm); width:36px; height:36px; cursor:pointer; font-size:15px; line-height:1;
 }
 
-.med-bg {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+/* ══ Hero ═════════════════════════════════════════════════ */
+header{padding:44px 0 28px}
+h1{
+  font-family:var(--serif); font-weight:600;
+  font-size:clamp(1.85rem,6vw,2.7rem); line-height:1.18; letter-spacing:-.02em;
+  max-width:16ch; margin-bottom:14px;
 }
-.med-bg::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 32px 32px;
+.lede{font-size:1.02rem; color:var(--ink-2); max-width:54ch; line-height:1.65}
+.live{
+  margin-top:22px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+  border-left:3px solid var(--open); padding-left:14px;
 }
-.med-bg::after {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 55% 40% at 0% 0%,   rgba(0,255,163,0.055) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 100% 100%,rgba(0,209,255,0.05)  0%, transparent 60%),
-    radial-gradient(ellipse 30% 30% at 100% 0%,  rgba(167,139,250,0.03) 0%, transparent 50%);
+.live-n{font-family:var(--serif); font-size:2.1rem; font-weight:600; color:var(--open); line-height:1}
+.live-t{font-size:.92rem; color:var(--ink-2)}
+.live[data-state="loading"] .live-n{color:var(--ink-3)}
+.live[data-state="failed"]{display:none}
+
+/* ══ Search ═══════════════════════════════════════════════ */
+.search{
+  background:var(--card); border:1px solid var(--rule); border-radius:var(--r-lg);
+  padding:20px; box-shadow:var(--shadow); margin-bottom:22px;
 }
-.ecg-wrap { position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; opacity: 0.08; }
-.ecg-svg { width: 200%; height: 100%; animation: ecgScroll 10s linear infinite; }
-@keyframes ecgScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.float-cross {
-  position: absolute; color: var(--accent); font-weight: 200;
-  animation: floatCross 24s ease-in-out infinite; opacity: 0;
+label.fl{display:block; font-size:.88rem; font-weight:600; margin-bottom:8px}
+.hint{font-size:.82rem; color:var(--ink-3); margin-bottom:12px}
+.q-row{display:flex; gap:10px; flex-wrap:wrap}
+#q{
+  flex:1 1 220px; min-width:0;
+  font-family:var(--sans); font-size:1rem; color:var(--ink);
+  background:var(--paper); border:1.5px solid var(--rule-2); border-radius:var(--r-md);
+  padding:13px 14px; min-height:50px;
 }
-.float-cross:nth-child(1) { font-size: 48px; left:  4%; top: 10%; animation-delay: 0s;  opacity: 0.025; }
-.float-cross:nth-child(2) { font-size: 80px; left: 88%; top: 18%; animation-delay: 6s;  opacity: 0.02; }
-.float-cross:nth-child(3) { font-size: 40px; left: 50%; top: 72%; animation-delay: 12s; opacity: 0.02; }
-.float-cross:nth-child(4) { font-size: 60px; left: 16%; top: 80%; animation-delay: 18s; opacity: 0.02; }
-.float-cross:nth-child(5) { font-size: 32px; left: 74%; top: 52%; animation-delay: 9s;  opacity: 0.025; }
-@keyframes floatCross {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%       { transform: translateY(-16px) rotate(6deg); }
+#q::placeholder{color:var(--ink-3)}
+#q:focus{border-color:var(--focus); outline:none; box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 18%,transparent)}
+#go{
+  font-family:var(--sans); font-size:1rem; font-weight:600;
+  background:var(--ink); color:var(--paper); border:none; border-radius:var(--r-md);
+  padding:13px 26px; min-height:50px; cursor:pointer;
+}
+#go:hover{background:var(--site)}
+#go[disabled]{opacity:.5; cursor:progress}
+
+.understood{
+  display:none; gap:8px; align-items:flex-start;
+  margin-top:12px; padding:10px 12px; font-size:.88rem;
+  background:var(--site-bg); border-left:3px solid var(--site); border-radius:0 var(--r-sm) var(--r-sm) 0;
+  color:var(--ink-2);
+}
+.understood.on{display:flex}
+.understood b{color:var(--ink); font-weight:600}
+.understood button{background:none;border:none;color:var(--ink-3);cursor:pointer;font-size:1rem;line-height:1;padding:0 2px}
+
+.common{margin-top:16px; display:flex; flex-wrap:wrap; gap:7px; align-items:center}
+.common .cl{font-size:.82rem; color:var(--ink-3); margin-right:2px}
+.chip{
+  font-family:var(--sans); font-size:.87rem; color:var(--ink-2);
+  background:var(--paper); border:1px solid var(--rule-2); border-radius:100px;
+  padding:7px 13px; cursor:pointer; min-height:36px;
+}
+.chip:hover{border-color:var(--ink-2); color:var(--ink)}
+
+.recent{margin-top:14px; font-size:.84rem; color:var(--ink-3); display:none; flex-wrap:wrap; gap:6px; align-items:center}
+.recent.on{display:flex}
+.recent button{
+  background:none; border:none; border-bottom:1px dotted var(--rule-2);
+  font-family:var(--sans); font-size:.84rem; color:var(--site); cursor:pointer; padding:2px 0;
 }
 
-.container { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-header { padding: 64px 0 32px; text-align: center; }
-
-.top-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(0, 232, 181, 0.08); border: 1px solid rgba(0, 232, 181, 0.2);
-  border-radius: var(--radius-pill); padding: 6px 16px;
-  font-size: 11px; font-weight: 600; color: var(--accent);
-  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px;
-  backdrop-filter: blur(8px);
+/* ══ Filters ══════════════════════════════════════════════ */
+.filters{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px;
+  margin-bottom:18px;
 }
-.pulse-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--grad-start); box-shadow: 0 0 6px var(--grad-start);
-  animation: pulseDot 2.4s ease-in-out infinite;
-}
-@keyframes pulseDot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(1.8); }
+.filters label{display:block; font-size:.78rem; color:var(--ink-3); font-weight:600; margin-bottom:5px}
+.filters select{
+  width:100%; font-family:var(--sans); font-size:.92rem; color:var(--ink);
+  background:var(--card); border:1px solid var(--rule-2); border-radius:var(--r-md);
+  padding:10px 12px; min-height:44px; cursor:pointer;
 }
 
-h1 {
-  font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800;
-  letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 16px;
-  background: linear-gradient(135deg, #FFFFFF 20%, var(--grad-start) 55%, var(--grad-end) 85%);
-  background-size: 200% 200%;
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: heroShine 6s ease-in-out infinite alternate;
+/* ══ Result bar ═══════════════════════════════════════════ */
+.bar{
+  display:none; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:12px 0 16px; border-bottom:1px solid var(--rule); margin-bottom:20px;
 }
-@keyframes heroShine {
-  from { background-position: 0% 50%; } to { background-position: 100% 50%; }
+.bar.on{display:flex}
+.bar-n{font-size:.95rem; font-weight:600}
+.bar-n em{font-style:normal; color:var(--ink-3); font-weight:400}
+.toggle{
+  margin-left:auto; display:inline-flex; align-items:center; gap:8px;
+  font-size:.88rem; color:var(--ink-2); cursor:pointer; user-select:none;
+}
+.toggle input{width:18px; height:18px; accent-color:var(--open); cursor:pointer}
+
+.working{display:none; align-items:center; gap:12px; padding:26px 0; color:var(--ink-2); font-size:.94rem}
+.working.on{display:flex}
+.spin{
+  width:18px;height:18px;border:2px solid var(--rule-2);border-top-color:var(--ink);
+  border-radius:50%;animation:sp .7s linear infinite;flex:0 0 auto;
+}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ══ Trial card ═══════════════════════════════════════════ */
+.list{display:flex; flex-direction:column; gap:18px; margin-bottom:28px}
+.trial{
+  background:var(--card); border:1px solid var(--rule); border-radius:var(--r-lg);
+  border-left:5px solid var(--rule-2);
+  padding:22px; box-shadow:var(--shadow);
+}
+.trial[data-state="open"]{border-left-color:var(--open)}
+.trial[data-state="soon"]{border-left-color:var(--soon)}
+.trial[data-state="shut"]{border-left-color:var(--shut)}
+
+.t-status{
+  display:inline-block; font-size:.78rem; font-weight:700; letter-spacing:.01em;
+  padding:4px 10px; border-radius:100px; margin-bottom:10px;
+}
+[data-state="open"] .t-status{background:var(--open-bg); color:var(--open)}
+[data-state="soon"] .t-status{background:var(--soon-bg); color:var(--soon)}
+[data-state="shut"] .t-status{background:var(--shut-bg); color:var(--shut)}
+
+.t-title{font-family:var(--serif); font-size:1.12rem; font-weight:600; line-height:1.4; margin-bottom:10px}
+.t-conds{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px}
+.t-cond{font-size:.8rem; color:var(--ink-2); background:var(--paper); border:1px solid var(--rule); border-radius:var(--r-sm); padding:3px 8px}
+
+.t-phase{font-size:.88rem; color:var(--ink-2); margin-bottom:14px; padding-left:12px; border-left:2px solid var(--rule-2)}
+
+.block{margin-bottom:16px}
+.block h3{font-size:.9rem; font-weight:700; margin-bottom:7px}
+.block p{font-size:.94rem; color:var(--ink-2); line-height:1.65}
+.block ul{list-style:none; display:flex; flex-direction:column; gap:6px}
+.block li{font-size:.92rem; color:var(--ink-2); line-height:1.55; display:flex; gap:8px}
+.block li::before{content:""; flex:0 0 6px; height:6px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+.block li.yes::before{background:var(--open)}
+.block li.no::before{background:var(--shut)}
+.small{font-size:.82rem; color:var(--ink-3); margin-top:6px}
+
+.gloss{margin-top:10px; padding:11px 13px; background:var(--paper); border:1px solid var(--rule); border-radius:var(--r-md)}
+.gloss-h{font-size:.78rem; font-weight:700; color:var(--ink-3); margin-bottom:6px}
+.gloss dd{font-size:.86rem; color:var(--ink-2); line-height:1.55; margin-bottom:4px}
+.gloss dd:last-child{margin-bottom:0}
+.gloss dd b{color:var(--ink); font-weight:600}
+.facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:var(--r-md); overflow:hidden; margin-bottom:16px}
+.fact{background:var(--card); padding:10px 12px}
+.fact dt{font-size:.74rem; color:var(--ink-3); font-weight:600; margin-bottom:2px}
+.fact dd{font-size:.9rem; font-weight:500}
+
+.sites{background:var(--site-bg); border-radius:var(--r-md); padding:14px; margin-bottom:16px}
+.sites h3{font-size:.9rem; font-weight:700; margin-bottom:9px; color:var(--site)}
+.site{padding:9px 0; border-top:1px solid color-mix(in srgb,var(--site) 18%,transparent)}
+.site:first-of-type{border-top:none; padding-top:0}
+.site-where{font-size:.93rem; font-weight:600}
+.site-fac{font-size:.86rem; color:var(--ink-2)}
+.site-call{margin-top:5px; display:flex; flex-wrap:wrap; gap:12px; font-size:.86rem}
+.site-call a{color:var(--site); font-weight:600; text-decoration:none; border-bottom:1px solid currentColor}
+.no-sites{font-size:.88rem; color:var(--ink-3); padding:10px 0}
+
+.acts{display:flex; flex-wrap:wrap; gap:8px}
+.act{
+  font-family:var(--sans); font-size:.9rem; font-weight:600;
+  border:1px solid var(--rule-2); background:var(--card); color:var(--ink);
+  border-radius:var(--r-md); padding:10px 15px; min-height:44px; cursor:pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.act:hover{border-color:var(--ink-2)}
+.act.main{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.act.main:hover{background:var(--site); border-color:var(--site)}
+.act.ai{border-color:var(--site); color:var(--site)}
+
+.ai-out{
+  display:none; margin-top:14px; padding:14px; border-radius:var(--r-md);
+  background:var(--site-bg); border-left:3px solid var(--site);
+  font-size:.93rem; line-height:1.65; color:var(--ink-2); white-space:pre-wrap;
+}
+.ai-out.on{display:block}
+.ai-out .ai-tag{display:block; font-size:.76rem; font-weight:700; color:var(--site); margin-bottom:6px}
+
+/* ══ States ═══════════════════════════════════════════════ */
+.empty{display:none; padding:48px 4px; border-top:1px solid var(--rule)}
+.empty.on{display:block}
+.empty h2{font-family:var(--serif); font-size:1.3rem; font-weight:600; margin-bottom:8px}
+.empty p{color:var(--ink-2); max-width:48ch; margin-bottom:14px}
+.empty .act{margin-right:8px}
+
+.more{
+  display:none; width:100%; font-family:var(--sans); font-size:.95rem; font-weight:600;
+  background:var(--card); color:var(--ink); border:1px solid var(--rule-2);
+  border-radius:var(--r-md); padding:14px; min-height:50px; cursor:pointer; margin-bottom:30px;
+}
+.more.on{display:block}
+.more:hover{border-color:var(--ink-2)}
+
+.note{
+  border:1px solid var(--rule); border-left:4px solid var(--soon);
+  background:var(--card); border-radius:0 var(--r-md) var(--r-md) 0;
+  padding:16px 18px; margin:8px 0 28px; font-size:.89rem; color:var(--ink-2); line-height:1.7;
+}
+.note h2{font-size:.92rem; font-weight:700; color:var(--ink); margin-bottom:6px}
+.note a{color:var(--site)}
+.note + .note{margin-top:-14px}
+
+footer{border-top:1px solid var(--rule); padding:26px 0 40px; font-size:.85rem; color:var(--ink-3); line-height:1.8}
+footer a{color:var(--site)}
+footer .v{display:block; margin-top:8px; font-size:.78rem}
+
+.toast{
+  position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  transform:translate(-50%,90px); z-index:60;
+  background:var(--ink); color:var(--paper); border-radius:100px;
+  padding:11px 20px; font-size:.88rem; font-weight:500; box-shadow:var(--shadow);
+  opacity:0; transition:transform .25s ease, opacity .25s ease; max-width:calc(100vw - 40px);
+}
+.toast.on{transform:translate(-50%,0); opacity:1}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:560px){
+  .wrap{padding:0 15px}
+  .top-in{padding:9px 15px}
+  header{padding:30px 0 20px}
+  .search{padding:16px; border-radius:var(--r-md)}
+  #go{flex:1 1 100%}
+  .trial{padding:17px 15px}
+  .acts .act{flex:1 1 calc(50% - 4px); justify-content:center}
 }
 
-.subtitle {
-  font-size: 1rem; font-weight: 400; color: var(--text-secondary);
-  max-width: 500px; margin: 0 auto 20px; line-height: 1.75;
+
+/* ══ v3 polish: hierarchy, trust, touch targets ═══════════ */
+.hero-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.meta-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);background:var(--card);border-radius:100px;padding:6px 10px;font-size:.78rem;color:var(--ink-2)}
+.meta-pill b{color:var(--ink);font-weight:700}
+.search-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px}
+.search-title{font-size:.95rem;font-weight:700}
+.search-sub{font-size:.78rem;color:var(--ink-3);margin-top:2px}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:25px;padding:0 7px;border:1px solid var(--rule-2);border-bottom-width:2px;border-radius:5px;font-size:.72rem;color:var(--ink-3);background:var(--paper)}
+.filters-wrap{margin-bottom:18px}
+.filters-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.filters-title{font-size:.82rem;font-weight:700;color:var(--ink-2)}
+.reset-filters{border:0;background:none;color:var(--site);font:600 .8rem var(--sans);cursor:pointer;padding:4px 0}
+.bar-source{font-size:.78rem;color:var(--ink-3);margin-left:auto}
+.result-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;width:100%}
+.result-summary{display:flex;align-items:baseline;gap:7px}
+.result-updated{font-size:.76rem;color:var(--ink-3)}
+.t-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}
+.nct{font:500 .74rem var(--sans);color:var(--ink-3);letter-spacing:.02em;white-space:nowrap}
+.t-title{margin-bottom:11px}
+.site{display:flex;flex-wrap:wrap;align-items:flex-start;column-gap:12px}
+.site-main{flex:1 1 240px;min-width:0}
+.site-call{margin-top:7px}
+.call-btn{display:inline-flex!important;align-items:center;gap:6px;padding:7px 10px;border:1px solid color-mix(in srgb,var(--site) 35%,var(--rule));border-radius:7px;background:var(--card);text-decoration:none!important}
+.call-btn:hover{background:var(--site-bg)}
+.contact-note{font-size:.78rem;color:var(--ink-3);margin-top:8px}
+.acts .act{transition:transform .12s ease,background .12s ease,border-color .12s ease}
+.acts .act:active{transform:translateY(1px)}
+.empty-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--site-bg);color:var(--site);font-weight:700;margin-bottom:12px}
+.trust-note{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--rule);background:var(--card);border-radius:var(--r-md);padding:12px 14px;margin:0 0 18px;font-size:.8rem;color:var(--ink-2);line-height:1.55}
+.trust-note strong{color:var(--ink)}
+@media(max-width:560px){
+  .top-in{gap:7px}.mark{font-size:15px}.langs{margin-left:auto}.lang{padding:5px 8px;font-size:12px}.theme-btn{width:34px;height:34px}
+  header{padding-top:30px}.hero-meta{gap:6px}.meta-pill{font-size:.74rem;padding:5px 9px}
+  .search-top .kbd{display:none}.result-tools{align-items:flex-start}.bar-source{margin-left:0;width:100%}
+  .trial{border-left-width:4px}.t-head{align-items:flex-start}.nct{font-size:.7rem}.acts .act{flex:1 1 calc(50% - 4px)}
+  .acts .act.main{flex-basis:100%}
 }
 
-.trust-row { display: flex; justify-content: center; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
-.trust-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--text-tertiary); letter-spacing: 0.03em; }
-.trust-icon { color: var(--accent); font-style: normal; font-weight: 700; }
-
-.lang-selector { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
-.lang-btn {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-pill); padding: 8px 20px;
-  color: var(--text-secondary); font-family: 'Inter', sans-serif;
-  font-size: 13px; font-weight: 500; cursor: pointer; transition: all var(--t-base);
-}
-.lang-btn:hover:not(.active) {
-  background: var(--surface-2); border-color: var(--border-hover);
-  color: var(--text-primary); transform: translateY(-1px);
-}
-.lang-btn.active {
-  background: var(--accent-dim); border-color: rgba(0, 232, 181, 0.35);
-  color: var(--accent); font-weight: 600; box-shadow: 0 0 16px rgba(0, 232, 181, 0.1);
-}
-
-.search-panel {
-  background: rgba(22, 29, 43, 0.8); border: 1px solid var(--border);
-  border-radius: var(--radius-xl); padding: 28px; margin-bottom: 24px;
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  box-shadow: var(--shadow-md); position: relative; overflow: hidden;
-  transition: box-shadow var(--t-base);
-}
-.search-panel::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(0,232,181,0.5) 50%, transparent 100%);
-}
-.search-panel:focus-within { box-shadow: var(--shadow-glow); }
-
-.search-label {
-  font-size: 11px; font-weight: 600; color: var(--accent);
-  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
-  display: flex; align-items: center; gap: 6px;
-}
-
-.search-row { display: flex; gap: 10px; flex-wrap: wrap; }
-.input-wrap { flex: 1; min-width: 200px; position: relative; }
-.input-wrap input {
-  width: 100%; background: rgba(11, 15, 20, 0.7);
-  border: 1px solid var(--border); border-radius: var(--radius-md);
-  padding: 14px 18px 14px 46px; color: var(--text-primary);
-  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400;
-  outline: none; transition: border-color var(--t-base), box-shadow var(--t-base), background var(--t-base);
-}
-.input-wrap input::placeholder { color: var(--text-tertiary); }
-.input-wrap input:hover { border-color: var(--border-hover); background: rgba(11, 15, 20, 0.9); }
-.input-wrap input:focus {
-  border-color: var(--border-focus); background: rgba(11, 15, 20, 0.9);
-  box-shadow: 0 0 0 3px rgba(0, 232, 181, 0.08);
-}
-.input-icon {
-  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-  font-size: 15px; pointer-events: none; opacity: 0.7;
-}
-
-.smart-banner {
-  display: none; align-items: center; gap: 10px;
-  background: rgba(0, 232, 181, 0.06); border: 1px solid rgba(0, 232, 181, 0.18);
-  border-radius: var(--radius-md); padding: 10px 14px; margin-top: 10px;
-  font-size: 13px; animation: fadeSlideIn var(--t-base) var(--ease) both;
-}
-.smart-banner.show { display: flex; }
-@keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); }
-}
-.smart-text { color: var(--text-secondary); flex: 1; }
-.smart-text strong { color: var(--accent); font-weight: 600; }
-.smart-dismiss {
-  background: none; border: none; color: var(--text-tertiary); cursor: pointer;
-  font-size: 14px; line-height: 1; padding: 2px 4px; border-radius: 4px;
-  transition: color var(--t-fast), background var(--t-fast);
-}
-.smart-dismiss:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
-
-.filter-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-.filter-row select {
-  background: rgba(11, 15, 20, 0.7); border: 1px solid var(--border);
-  border-radius: var(--radius-md); padding: 10px 12px;
-  color: var(--text-secondary); font-family: 'Inter', sans-serif;
-  font-size: 13px; font-weight: 400; outline: none; cursor: pointer;
-  flex: 1; min-width: 128px;
-  transition: border-color var(--t-base), color var(--t-base);
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
-  background-color: rgba(11, 15, 20, 0.7);
-}
-.filter-row select:hover { border-color: var(--border-hover); color: var(--text-primary); }
-.filter-row select:focus { border-color: var(--border-focus); }
-.filter-row select option { background: #1C2538; color: var(--text-primary); }
-
-.search-btn {
-  background: var(--grad); color: var(--text-inverse); border: none;
-  border-radius: var(--radius-md); padding: 14px 28px;
-  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700;
-  letter-spacing: 0.01em; cursor: pointer; white-space: nowrap;
-  transition: transform var(--t-base), box-shadow var(--t-base), opacity var(--t-fast);
-  position: relative; overflow: hidden;
-}
-.search-btn:hover {
-  transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 8px 24px rgba(0, 255, 163, 0.28), 0 4px 12px rgba(0, 209, 255, 0.18);
-}
-.search-btn:active { transform: translateY(0) scale(0.99); }
-.search-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
-.search-btn::after {
-  content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-  transform: skewX(-20deg); transition: none;
-}
-.search-btn:hover::after { animation: btnShimmer 0.6s ease forwards; }
-@keyframes btnShimmer { from { left: -100%; } to { left: 160%; } }
-
-.quick-tags {
-  margin-top: 16px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
-}
-.quick-label { font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.07em; }
-.tag {
-  background: transparent; border: 1px solid var(--border);
-  border-radius: var(--radius-pill); padding: 4px 12px;
-  font-size: 12px; font-weight: 500; color: var(--text-tertiary);
-  cursor: pointer; transition: all var(--t-base);
-}
-.tag:hover {
-  background: var(--accent-dim); border-color: rgba(0, 232, 181, 0.3);
-  color: var(--accent); transform: translateY(-1px);
-}
-
-/* ═══════════════════════════════════════════════════════
-   STATUS BAR
-═══════════════════════════════════════════════════════ */
-.status-bar {
-  display: none; align-items: center; gap: 14px;
-  background: rgba(0, 232, 181, 0.04); border: 1px solid rgba(0, 232, 181, 0.12);
-  border-radius: var(--radius-lg); padding: 14px 20px; margin-bottom: 20px;
-  animation: fadeSlideIn var(--t-base) ease both;
-}
-.spinner {
-  width: 18px; height: 18px; border: 2px solid rgba(0, 232, 181, 0.15);
-  border-top-color: var(--accent); border-radius: 50%;
-  animation: spin 0.65s linear infinite; flex-shrink: 0;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.status-main { font-size: 13px; font-weight: 500; color: var(--accent); }
-.status-sub  { font-size: 12px; color: var(--text-tertiary); margin-top: 1px; }
-
-/* ═══════════════════════════════════════════════════════
-   STATS ROW — India Sites card is now interactive
-═══════════════════════════════════════════════════════ */
-.stats-row {
-  display: none; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;
-  animation: fadeSlideIn var(--t-slow) ease both;
-}
-.stat-card {
-  flex: 1; min-width: 110px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius-lg);
-  padding: 20px; text-align: center; position: relative; overflow: hidden;
-  transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
-}
-.stat-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: var(--grad); opacity: 0.7;
-}
-.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-
-/* India Sites card — special interactive state */
-.stat-card.clickable {
-  cursor: pointer;
-}
-.stat-card.clickable:hover {
-  border-color: rgba(0,232,181,0.3);
-  box-shadow: var(--shadow-glow);
-}
-.stat-card.clickable .click-hint {
-  font-size: 10px; color: var(--accent); opacity: 0.7;
-  margin-top: 4px; letter-spacing: 0.05em;
-  transition: opacity var(--t-base);
-}
-.stat-card.clickable:hover .click-hint { opacity: 1; }
-.stat-card.active-filter {
-  background: var(--accent-dim);
-  border-color: rgba(0, 232, 181, 0.4);
-  box-shadow: var(--shadow-glow), 0 0 0 2px rgba(0,232,181,0.15);
-}
-.stat-card.active-filter::before { opacity: 1; }
-.stat-card.active-filter .click-hint { opacity: 1; color: var(--accent); font-weight: 600; }
-
-.stat-num {
-  font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1;
-  background: var(--grad);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.stat-label {
-  font-size: 11px; font-weight: 500; color: var(--text-tertiary);
-  text-transform: uppercase; letter-spacing: 0.07em; margin-top: 6px;
-}
-
-/* India filter active banner */
-.india-filter-banner {
-  display: none; align-items: center; gap: 10px;
-  background: rgba(0,232,181,0.07); border: 1px solid rgba(0,232,181,0.25);
-  border-radius: var(--radius-md); padding: 10px 16px; margin-bottom: 16px;
-  font-size: 13px; font-weight: 500; color: var(--accent);
-  animation: fadeSlideIn var(--t-base) ease both;
-}
-.india-filter-banner.show { display: flex; }
-.india-filter-banner span { flex: 1; }
-.india-filter-close {
-  background: none; border: none; color: var(--text-tertiary); cursor: pointer;
-  font-size: 14px; padding: 2px 6px; border-radius: 4px;
-  transition: color var(--t-fast), background var(--t-fast);
-}
-.india-filter-close:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
-
-/* ═══════════════════════════════════════════════════════
-   TRIAL CARDS
-═══════════════════════════════════════════════════════ */
-.results-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
-
-.trial-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-xl); padding: 28px;
-  position: relative; overflow: hidden;
-  animation: cardEnter var(--t-slow) var(--ease) both;
-  transition: border-color var(--t-base), transform var(--t-base), box-shadow var(--t-base);
-}
-@keyframes cardEnter {
-  from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); }
-}
-.trial-card:hover {
-  border-color: var(--border-hover); transform: translateY(-3px); box-shadow: var(--shadow-lg);
-}
-.trial-card::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: var(--grad); border-radius: 2px 0 0 2px; opacity: 0;
-  transition: opacity var(--t-base);
-}
-.trial-card:hover::before { opacity: 1; }
-
-/* India-sites highlight on card */
-.trial-card.has-india-sites {
-  border-color: rgba(0,232,181,0.18);
-}
-.trial-card.has-india-sites::before { opacity: 1; }
-
-.card-top {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
-}
-.card-badges { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
-
-.phase-badge {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; padding: 3px 10px; border-radius: var(--radius-pill);
-}
-.phase-1  { background: rgba(251,191,36,0.1);  color: #FBBF24; border: 1px solid rgba(251,191,36,0.2); }
-.phase-2  { background: rgba(0,232,181,0.1);   color: var(--accent); border: 1px solid rgba(0,232,181,0.2); }
-.phase-3  { background: rgba(96,165,250,0.1);  color: #60A5FA; border: 1px solid rgba(96,165,250,0.2); }
-.phase-4  { background: rgba(167,139,250,0.1); color: #A78BFA; border: 1px solid rgba(167,139,250,0.2); }
-.phase-na { background: rgba(255,255,255,0.04); color: var(--text-tertiary); border: 1px solid var(--border); }
-
-.status-pill {
-  font-size: 10px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.08em; padding: 3px 10px; border-radius: var(--radius-pill);
-}
-.recruiting     { background: rgba(0,232,181,0.1);  color: var(--accent); border: 1px solid rgba(0,232,181,0.2); }
-.not-recruiting { background: rgba(248,113,113,0.08); color: #F87171; border: 1px solid rgba(248,113,113,0.18); }
-.completed      { background: rgba(255,255,255,0.04); color: var(--text-tertiary); border: 1px solid var(--border); }
-
-.trial-id { font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; color: var(--text-tertiary); margin-bottom: 6px; letter-spacing: 0.04em; }
-.trial-title { font-size: 15px; font-weight: 600; color: var(--text-primary); line-height: 1.5; }
-
-.summary-box {
-  background: rgba(0, 232, 181, 0.04); border-left: 2px solid var(--accent);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 14px 16px; margin: 16px 0;
-}
-.box-label {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.1em; margin-bottom: 8px;
-  display: flex; align-items: center; gap: 5px;
-}
-.summary-box .box-label { color: var(--accent); }
-.summary-text { font-size: 13.5px; line-height: 1.75; color: var(--text-secondary); }
-
-.elig-box {
-  background: rgba(251, 191, 36, 0.04); border: 1px solid rgba(251, 191, 36, 0.12);
-  border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 16px;
-}
-.elig-box .box-label { color: #FBBF24; }
-.elig-list { display: flex; flex-direction: column; gap: 7px; }
-.elig-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
-.ei { font-size: 10px; flex-shrink: 0; margin-top: 3px; font-weight: 700; }
-.ei.ok { color: var(--accent); }
-.ei.no { color: var(--red); }
-.more-note { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; padding-left: 18px; }
-
-.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 16px; }
-.meta-item {
-  background: var(--bg-raised); border: 1px solid var(--border);
-  border-radius: var(--radius-md); padding: 12px 14px;
-  transition: border-color var(--t-base);
-}
-.meta-item:hover { border-color: var(--border-hover); }
-.meta-key { font-size: 10px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-.meta-val { font-size: 13px; font-weight: 500; color: var(--text-primary); }
-
-/* India sites section inside card — highlighted when filter is active */
-.locations-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-.loc-tag {
-  background: rgba(96, 165, 250, 0.06); border: 1px solid rgba(96, 165, 250, 0.15);
-  border-radius: var(--radius-sm); padding: 3px 10px; font-size: 12px; color: var(--blue);
-}
-/* Pop the location tags when India filter is active */
-.india-filter-active .loc-tag {
-  background: rgba(0,232,181,0.08); border-color: rgba(0,232,181,0.25);
-  color: var(--accent);
-}
-
-.card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.btn-primary-sm {
-  flex: 1; min-width: 120px; background: var(--grad); border: none;
-  border-radius: var(--radius-md); padding: 10px 16px;
-  color: var(--text-inverse); font-family: 'Inter', sans-serif;
-  font-size: 13px; font-weight: 600; cursor: pointer;
-  text-align: center; text-decoration: none;
-  display: inline-flex; align-items: center; justify-content: center;
-  transition: transform var(--t-base), box-shadow var(--t-base);
-}
-.btn-primary-sm:hover { transform: translateY(-1px) scale(1.01); box-shadow: 0 6px 20px rgba(0,255,163,0.22); }
-.btn-primary-sm:active { transform: translateY(0) scale(0.99); }
-.btn-outline {
-  flex: 1; min-width: 120px; background: transparent; border: 1px solid var(--border);
-  border-radius: var(--radius-md); padding: 10px 16px;
-  color: var(--text-secondary); font-family: 'Inter', sans-serif;
-  font-size: 13px; font-weight: 500; cursor: pointer;
-  text-align: center; text-decoration: none;
-  display: inline-flex; align-items: center; justify-content: center;
-  transition: all var(--t-base);
-}
-.btn-outline:hover { background: rgba(255,255,255,0.04); border-color: var(--border-hover); color: var(--text-primary); transform: translateY(-1px); }
-
-.empty-state { display: none; text-align: center; padding: 72px 24px; animation: fadeSlideIn var(--t-slow) ease both; }
-.empty-icon  { font-size: 3rem; margin-bottom: 16px; display: block; opacity: 0.8; }
-.empty-title { font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
-.empty-hint  { font-size: 14px; color: var(--text-secondary); line-height: 1.7; max-width: 380px; margin: 0 auto; }
-
-.toast {
-  position: fixed; bottom: 24px; right: 24px;
-  background: var(--surface-3); border: 1px solid rgba(0, 232, 181, 0.25);
-  border-radius: var(--radius-lg); padding: 12px 20px;
-  font-size: 13px; font-weight: 500; color: var(--accent);
-  box-shadow: var(--shadow-lg); z-index: 999;
-  transform: translateY(80px) scale(0.96); opacity: 0;
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.toast.show { transform: translateY(0) scale(1); opacity: 1; }
-
-.disclaimer {
-  background: rgba(248, 113, 113, 0.04); border: 1px solid rgba(248, 113, 113, 0.14);
-  border-radius: var(--radius-lg); padding: 16px 20px; margin: 24px 0;
-  font-size: 12.5px; color: #FDA4AF; line-height: 1.7;
-}
-.disclaimer strong { font-weight: 600; }
-
-footer {
-  text-align: center; padding: 40px 20px;
-  border-top: 1px solid var(--border); color: var(--text-tertiary);
-  font-size: 12.5px; line-height: 2;
-}
-footer strong { color: var(--accent); font-weight: 600; }
-.footer-sub { color: #374151; margin-top: 6px; font-size: 11px; display: block; }
-
-.section-divider { width: 100%; height: 1px; background: var(--border); margin: 4px 0 20px; }
-
-@media (max-width: 640px) {
-  header          { padding: 40px 0 24px; }
-  h1              { font-size: 1.85rem; }
-  .search-panel   { padding: 20px 16px; }
-  .search-row     { flex-direction: column; }
-  .search-btn     { width: 100%; padding: 14px; justify-content: center; }
-  .meta-grid      { grid-template-columns: 1fr 1fr; }
-  .card-top       { gap: 10px; }
-  .card-badges    { flex-direction: row; align-items: center; }
-  .trust-row      { gap: 14px; }
-  .trial-card     { padding: 20px 18px; }
-  .container      { padding: 0 16px; }
-}
-@media (max-width: 400px) {
-  .meta-grid      { grid-template-columns: 1fr; }
-  .card-actions   { flex-direction: column; }
-  .btn-primary-sm, .btn-outline { min-width: unset; }
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); }
+/* ══ Print — a patient walks into a clinic holding this ═══ */
+@media print{
+  body{background:#fff; color:#000; font-size:11pt}
+  .top,header,.search,.filters,.bar,.more,.acts,.langs,.toast,.working,.empty,.recent{display:none!important}
+  .list{gap:0}
+  .trial{page-break-inside:avoid; border:1px solid #000; border-left-width:4px; box-shadow:none; margin-bottom:12pt}
+  body.printing .trial{display:none}
+  body.printing .trial.printing{display:block}
+  .sites{background:#f4f4f4}
+  .note{border-color:#000}
+  a[href^="http"]::after{content:" (" attr(href) ")"; font-size:9pt; color:#444}
 }
 </style>
 </head>
 <body>
 
-<div class="med-bg" aria-hidden="true">
-  <span class="float-cross">✚</span>
-  <span class="float-cross">✚</span>
-  <span class="float-cross">✚</span>
-  <span class="float-cross">✚</span>
-  <span class="float-cross">✚</span>
-  <div class="ecg-wrap">
-    <svg class="ecg-svg" viewBox="0 0 1400 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,60 L50,60 L70,60 L82,14 L94,106 L106,14 L118,60 L158,60 L188,60 L200,45 L210,75 L220,60 L262,60 L286,60 L298,14 L310,106 L322,14 L334,60 L374,60 L404,60 L416,45 L426,75 L436,60 L478,60 L502,60 L514,14 L526,106 L538,14 L550,60 L590,60 L620,60 L632,45 L642,75 L652,60 L694,60 L718,60 L730,14 L742,106 L754,14 L766,60 L806,60 L836,60 L848,45 L858,75 L868,60 L910,60 L934,60 L946,14 L958,106 L970,14 L982,60 L1022,60 L1052,60 L1064,45 L1074,75 L1084,60 L1126,60 L1150,60 L1162,14 L1174,106 L1186,14 L1198,60 L1238,60 L1268,60 L1280,45 L1290,75 L1300,60 L1400,60"
-        stroke="url(#ecgGrad)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <defs>
-        <linearGradient id="ecgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="#00FFA3"/>
-          <stop offset="100%" stop-color="#00D1FF"/>
-        </linearGradient>
-      </defs>
-    </svg>
+<div class="top">
+  <div class="top-in">
+    <div class="mark">ClinicalTrials India <span id="vstamp"></span></div>
+    <div class="langs" role="group" aria-label="Language">
+      <button class="lang" data-lang="en" aria-pressed="true">English</button>
+      <button class="lang" data-lang="kn" aria-pressed="false" lang="kn">ಕನ್ನಡ</button>
+      <button class="lang" data-lang="hi" aria-pressed="false" lang="hi">हिंदी</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Switch light or dark">◐</button>
   </div>
 </div>
 
-<div class="container">
+<div class="wrap">
 
   <header>
-    <div class="top-badge">
-      <span class="pulse-dot"></span>
-      🇮🇳 India Clinical Trials · Live Data
+    <h1 id="h1">Find clinical trials recruiting in India.</h1>
+    <p class="lede" id="lede">Search in everyday language. See the study status, eligibility clues, Indian hospitals and contact details — then verify everything with the trial team.</p>
+    <div class="hero-meta" aria-label="Service information">
+      <span class="meta-pill">✓ <b>India-first</b></span>
+      <span class="meta-pill">↻ <b>Live registry data</b></span>
+      <span class="meta-pill">EN · ಕನ್ನಡ · हिंदी</span>
     </div>
-    <h1 id="mainTitle">ClinicalTrials India Finder</h1>
-    <p class="subtitle" id="subtitleText">
-      Search active clinical trials across India — even if you don't know the exact medical term. Built for every Indian patient.
-    </p>
-    <div class="trust-row" role="list">
-      <span class="trust-item" role="listitem"><i class="trust-icon">✓</i> NIH Verified Data</span>
-      <span class="trust-item" role="listitem"><i class="trust-icon">✓</i> Smart Search</span>
-      <span class="trust-item" role="listitem"><i class="trust-icon">✓</i> 3 Languages</span>
-      <span class="trust-item" role="listitem"><i class="trust-icon">✓</i> Always Free</span>
-    </div>
-    <div class="lang-selector" role="group" aria-label="Language selector">
-      <button class="lang-btn active" onclick="setLang('en')" id="btn-en" aria-pressed="true">🇬🇧 English</button>
-      <button class="lang-btn" onclick="setLang('kn')" id="btn-kn" aria-pressed="false">🇮🇳 ಕನ್ನಡ</button>
-      <button class="lang-btn" onclick="setLang('hi')" id="btn-hi" aria-pressed="false">🇮🇳 हिंदी</button>
+    <div class="live" id="live" data-state="loading">
+      <span class="live-n" id="liveN">—</span>
+      <span class="live-t" id="liveT">studies recruiting in India right now</span>
     </div>
   </header>
 
-  <div class="search-panel" role="search">
-    <div class="search-label">
-      🔬 <span id="searchLabelText">Search by disease, symptom, or condition — in any language</span>
+  <section class="search">
+    <div class="search-top"><div><div class="search-title">Find a study by condition</div><div class="search-sub">Use the words you would normally use.</div></div><span class="kbd">Enter ↵</span></div>
+    <label class="fl" for="q" id="qLabel">What is the illness?</label>
+    <p class="hint" id="qHint">Everyday words are fine — sugar, high BP, kshay, ಸಕ್ಕರೆ ಕಾಯಿಲೆ. Spelling does not have to be right.</p>
+    <div class="q-row">
+      <input id="q" type="text" autocomplete="off" spellcheck="false"
+             placeholder="sugar disease, high bp, kshay, breast cancer…"
+             aria-describedby="qHint"/>
+      <button id="go">Search</button>
     </div>
-    <div class="search-row">
-      <div class="input-wrap">
-        <span class="input-icon" aria-hidden="true">🩺</span>
-        <input type="text" id="diseaseInput"
-          placeholder="e.g. sugar disease, high bp, chest pain, kshay, TB..."
-          aria-label="Search disease or symptom" autocomplete="off" spellcheck="false"/>
-      </div>
-      <button class="search-btn" onclick="searchTrials()" id="searchBtn" aria-label="Search clinical trials">
-        Search Trials
-      </button>
+    <div class="understood" id="und" role="status" aria-live="polite">
+      <span id="undText"></span>
+      <button id="undX" aria-label="Dismiss">✕</button>
     </div>
-    <div class="smart-banner" id="smartBanner" role="status" aria-live="polite">
-      <span aria-hidden="true">🧠</span>
-      <span class="smart-text" id="smartText"></span>
-      <button class="smart-dismiss" onclick="document.getElementById('smartBanner').classList.remove('show')" aria-label="Dismiss">✕</button>
+    <div class="common">
+      <span class="cl" id="commonLabel">Common:</span>
+      <button class="chip" data-q="Diabetes">Diabetes / sugar</button>
+      <button class="chip" data-q="Hypertension">High BP</button>
+      <button class="chip" data-q="Breast Cancer">Breast cancer</button>
+      <button class="chip" data-q="Tuberculosis">TB</button>
+      <button class="chip" data-q="Chronic Kidney Disease">Kidney disease</button>
+      <button class="chip" data-q="Asthma">Asthma</button>
+      <button class="chip" data-q="Stroke">Stroke</button>
+      <button class="chip" data-q="Rheumatoid Arthritis">Joint pain</button>
     </div>
-    <div class="filter-row">
-      <select id="statusFilter" aria-label="Filter by recruitment status">
-        <option value="RECRUITING">Recruiting Now</option>
-        <option value="ALL">All Statuses</option>
-        <option value="NOT_YET_RECRUITING">Not Yet Recruiting</option>
-        <option value="COMPLETED">Completed</option>
+    <div class="recent" id="recent" aria-label="Recent searches"></div>
+  </section>
+
+  <div class="filters-wrap">
+    <div class="filters-head"><span class="filters-title">Narrow the results</span><button class="reset-filters" id="resetFilters" type="button">Reset filters</button></div>
+  <div class="filters">
+    <div>
+      <label for="fStatus" id="lStatus">Recruitment</label>
+      <select id="fStatus">
+        <option value="RECRUITING|NOT_YET_RECRUITING" selected>Open or opening soon</option>
+        <option value="RECRUITING">Taking people now</option>
+        <option value="">Any stage, including finished</option>
       </select>
-      <select id="phaseFilter" aria-label="Filter by trial phase">
-        <option value="">All Phases</option>
+    </div>
+    <div>
+      <label for="fPhase" id="lPhase">Phase</label>
+      <select id="fPhase">
+        <option value="">Any phase</option>
         <option value="PHASE1">Phase 1</option>
         <option value="PHASE2">Phase 2</option>
         <option value="PHASE3">Phase 3</option>
         <option value="PHASE4">Phase 4</option>
-      </select>
-      <select id="countFilter" aria-label="Number of results to show">
-        <option value="5">Show 5</option>
-        <option value="10" selected>Show 10</option>
-        <option value="20">Show 20</option>
+        <option value="NA">No phase (device, surgery, observation)</option>
       </select>
     </div>
-    <div class="quick-tags" role="group" aria-label="Quick search suggestions">
-      <span class="quick-label" id="quickLabel">Quick:</span>
-      <span class="tag" onclick="quickSearch('Diabetes')"     role="button" tabindex="0">🩸 Sugar / Diabetes</span>
-      <span class="tag" onclick="quickSearch('Hypertension')" role="button" tabindex="0">💓 High BP</span>
-      <span class="tag" onclick="quickSearch('Cancer')"       role="button" tabindex="0">🎗️ Cancer</span>
-      <span class="tag" onclick="quickSearch('Tuberculosis')" role="button" tabindex="0">🫁 TB / Kshay</span>
-      <span class="tag" onclick="quickSearch('COVID-19')"     role="button" tabindex="0">🦠 COVID-19</span>
-      <span class="tag" onclick="quickSearch('Dengue')"       role="button" tabindex="0">🦟 Dengue</span>
-      <span class="tag" onclick="quickSearch('Heart Disease')"role="button" tabindex="0">❤️ Heart</span>
-      <span class="tag" onclick="quickSearch('Asthma')"       role="button" tabindex="0">🌬️ Asthma</span>
-    </div>
-  </div>
-
-  <div class="status-bar" id="statusBar" role="status" aria-live="polite">
-    <div class="spinner" aria-hidden="true"></div>
     <div>
-      <div class="status-main" id="statusMain">Searching…</div>
-      <div class="status-sub"  id="statusSub">Connecting to ClinicalTrials.gov</div>
+      <label for="fState" id="lState">State</label>
+      <select id="fState"><option value="">Anywhere in India</option></select>
+    </div>
+    <div>
+      <label for="fSort" id="lSort">Order</label>
+      <select id="fSort">
+        <option value="relevance">Best match</option>
+        <option value="sites">Most India sites first</option>
+        <option value="near">Nearest to me</option>
+      </select>
     </div>
   </div>
-
-  <div class="stats-row" id="statsRow" role="region" aria-label="Search results summary">
-    <div class="stat-card">
-      <div class="stat-num"   id="statTotal">0</div>
-      <div class="stat-label" id="statLabel1">Trials Found</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num"   id="statRecruiting">0</div>
-      <div class="stat-label" id="statLabel2">Recruiting Now</div>
-    </div>
-    <!-- India Sites card — clickable filter -->
-    <div class="stat-card clickable" id="indiaSitesCard"
-         onclick="toggleIndiaFilter()"
-         role="button" tabindex="0"
-         aria-label="Filter by India sites"
-         title="Click to show only trials with sites in India">
-      <div class="stat-num"   id="statSites">0</div>
-      <div class="stat-label" id="statLabel3">India Sites</div>
-      <div class="click-hint" id="indiaSitesHint">Click to filter ↑</div>
-    </div>
   </div>
 
-  <!-- India filter active banner -->
-  <div class="india-filter-banner" id="indiaFilterBanner" role="status" aria-live="polite">
-    <span>📍 Showing only trials with <strong>confirmed India sites</strong></span>
-    <button class="india-filter-close" onclick="clearIndiaFilter()" aria-label="Clear India filter">✕ Clear</button>
+  <div class="trust-note"><span aria-hidden="true">ⓘ</span><div><strong>Registry source:</strong> ClinicalTrials.gov. A listing is not a guarantee that a site is currently enrolling or that you qualify. Confirm availability, eligibility, costs and visit requirements directly with the study team.</div></div>
+
+  <div class="bar" id="bar">
+    <div class="result-tools"><div class="result-summary"><span class="bar-n" id="barN"></span><span class="result-updated" id="resultUpdated"></span></div><span class="bar-source">Source: ClinicalTrials.gov</span></div>
+    <label class="toggle">
+      <input type="checkbox" id="indiaOnly" checked/>
+      <span id="indiaOnlyLabel">Only trials with a confirmed India site</span>
+    </label>
   </div>
 
-  <div class="empty-state" id="emptyState" role="status">
-    <span class="empty-icon" aria-hidden="true">🔭</span>
-    <div class="empty-title" id="emptyTitle">No trials found</div>
-    <p class="empty-hint"    id="emptyText">Try a symptom like "chest pain" or use the quick tags above</p>
+  <div class="working" id="working" role="status" aria-live="polite">
+    <span class="spin" aria-hidden="true"></span>
+    <span id="workingText">Searching ClinicalTrials.gov…</span>
   </div>
 
-  <div class="results-grid" id="resultsGrid" role="list" aria-label="Clinical trial results"></div>
+  <div class="list" id="list"></div>
 
-  <div class="disclaimer" id="disclaimerBox" role="note">
-    <strong>⚠️ Medical Disclaimer:</strong> This tool is for informational purposes only.
-    Always consult a qualified physician before enrolling in any clinical trial.
-    Data sourced from ClinicalTrials.gov (NIH, USA).
+  <button class="more" id="more">Load more results</button>
+
+  <div class="empty" id="empty">
+    <div class="empty-icon" aria-hidden="true">⌕</div>
+    <h2 id="emptyH">Nothing matched that.</h2>
+    <p id="emptyP">Try a simpler word — just “cancer” instead of the exact type — or widen the recruitment filter.</p>
+    <button class="act" id="emptyWiden">Include finished studies</button>
+    <button class="act" id="emptyClear">Clear the India-site filter</button>
+  </div>
+
+  <div class="note">
+    <h2 id="ctriH">This is not every trial running in India.</h2>
+    <p id="ctriP">ClinicalTrials.gov is the US registry. Many Indian studies are registered only with the CTRI (Clinical Trials Registry – India). If you find nothing here, search <a href="https://ctri.nic.in" target="_blank" rel="noopener">ctri.nic.in</a> as well.</p>
+  </div>
+
+  <div class="note">
+    <h2 id="discH">Talk to your own doctor first.</h2>
+    <p id="discP">Nothing here is medical advice, and no one on this site can enrol you. Eligibility is decided by the trial doctor after examining you. Do not pay anyone simply to secure enrolment. Ask the study team whether there are any travel, tests or other costs before agreeing to take part.</p>
   </div>
 
   <footer>
-    Built by <strong>Dr. Manoj D H</strong> · Pharm.D · IIM Indore EPHM '26<br/>
-    Data: <strong>ClinicalTrials.gov</strong> (NIH/NLM) · Open Source · No data stored or tracked
-    <span class="footer-sub">github.com/manudh7676-web/clinicaltrials-india</span>
+    Built by <a href="https://github.com/manudh7676-web/clinicaltrials-india" target="_blank" rel="noopener">Dr. Manoj D H</a>, Pharm.D.<br/>
+    Live study data comes from ClinicalTrials.gov (US NIH / NLM). Recent searches are stored only on this device to make them easier to reuse; search terms are sent to ClinicalTrials.gov to retrieve results.
+    <span class="v" id="vfoot"></span>
   </footer>
-
 </div>
 
-<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* ══════════════════════════════════════════════════════
-   SMART MEDICAL SEARCH ENGINE
-══════════════════════════════════════════════════════ */
-const MEDICAL_MAP = [
-  {terms:['diabetes','diabetis','diabeties','diabtes','diabetese','diabeetus','dibaetes','sugar disease','sugar','high sugar','blood sugar','sweet disease','sugar ki bimari','madhumeh','madhumeha','मधुमेह','ಮಧುಮೇಹ','high glucose','glucose problem','insulin','type 1','type 2','type1','type2','t2dm','t1dm','dm2','dm1','hyperglycemia','diabetic','diabetics'],canonical:'Diabetes'},
-  {terms:['hypertension','hyper tension','hyperspace tension','hypertesion','hypertention','hypertenshun','hipertension','hyper space tension','high bp','high blood pressure','bp high','blood pressure','bp problem','elevated bp','htn','high pressure','high tension','raktachaap','रक्तचाप','ರಕ್ತದೊತ್ತಡ','pressure high','bp ki bimari','blood presure','blod pressure','haigh bp','hai bp','bp'],canonical:'Hypertension'},
-  {terms:['tuberculosis','tubercolosis','tuberclosis','tuboclerosis','tuberculousis','tubercolisis','tb','kshaya','kshay','क्षय','ಕ್ಷಯ','kshaya rog','coughing blood','tb disease','phthisis','pulmonary tb','mycobacterium','lung tb','chest tb','tbosis'],canonical:'Tuberculosis'},
-  {terms:['cancer','canser','cancur','cansur','kancer','canccer','tumor','tumour','carcinoma','malignancy','neoplasm','oncology','kark rog','कैंसर','ಕ್ಯಾನ್ಸರ್','growth in body','lump','abnormal growth','chemotherapy','lymphoma','leukemia','leukaemia','sarcoma','melanoma','metastasis'],canonical:'Cancer'},
-  {terms:['heart disease','heart attack','cardiac','coronary','heart problem','chest pain','myocardial','heart failure','cardiomyopathy','arrhythmia','heart block','angina','ischemic heart','hridaya rog','दिल की बीमारी','ಹೃದಯ ರೋಗ','heart ki bimari','chati dard','heart ki takleef','bypass','stent','palpitation','heartbeat problem','irregular heartbeat','cheast pain','chestpain','hart attack','heart atack'],canonical:'Heart Disease'},
-  {terms:['covid','covid-19','covid19','corona','coronavirus','sars-cov-2','corona virus','post covid','long covid','kovid','corono','cronavirus'],canonical:'COVID-19'},
-  {terms:['dengue','dengu','dengee','dengue fever','bone fever','breakbone','डेंगू','ಡೆಂಗ್ಯೂ','dengue ki bimari','aedes','platelet drop','platelet low','platelet problem','dengoo','dengu fever'],canonical:'Dengue'},
-  {terms:['malaria','maleria','malariya','malera','mosquito disease','mosquito fever','मलेरिया','ಮಲೇರಿಯಾ','paludism','plasmodium','malaria fever','melaria','malaraia'],canonical:'Malaria'},
-  {terms:['asthma','asthama','aasthma','astma','asthma attack','breathing problem','breathing difficulty','shortness of breath','wheezing','breathlessness','saans ki bimari','dama','दमा','ಉಬ್ಬಸ','bronchial','respiratory problem','lung problem','inhaler','nebulizer','saas ki takleef','breath problem','cant breathe'],canonical:'Asthma'},
-  {terms:['kidney disease','kidney failure','renal failure','renal disease','ckd','chronic kidney','kidney problem','kidney stone','nephrotic','dialysis','किडनी','ಮೂತ್ರಪಿಂಡ ರೋಗ','kidney ki bimari','glomerulonephritis','proteinuria','creatinine high','ganda khoon','kidny','kidneys'],canonical:'Kidney Disease'},
-  {terms:['liver disease','liver failure','hepatitis','cirrhosis','fatty liver','jaundice','पीलिया','जिगर की बीमारी','ಯಕೃತ್ ರೋಗ','liver problem','liver ki bimari','hep b','hep c','hepatitis b','hepatitis c','nafld','nash','yellow eyes','yellowish skin','liver infection'],canonical:'Liver Disease'},
-  {terms:['arthritis','arthritus','arthirtis','joint pain','joint problem','gathiya','गठिया','ಸಂಧಿವಾತ','rheumatoid','osteoarthritis','knee pain','hip pain','joint swelling','ra','rheumatism','bone pain','jont pain','ghutne dard','ghutna dard'],canonical:'Arthritis'},
-  {terms:['stroke','brain stroke','brain attack','paralysis','half body paralysis','laqwa','लकवा','ಪಾರ್ಶ್ವವಾಯು','cerebral','brain hemorrhage','brain bleed','ischemic stroke','facial droop','speech problem sudden','lakhwa'],canonical:'Stroke'},
-  {terms:['depression','anxiety','mental health','mental illness','mood disorder','bipolar','schizophrenia','stress disorder','ptsd','ocd','panic attack','manhik swasthya','मानसिक स्वास्थ्य','ಮಾನಸಿಕ ಆರೋಗ್ಯ','sad feeling','low mood','mental problem','mind problem'],canonical:'Mental Health'},
-  {terms:['thyroid','hypothyroid','hyperthyroid','thyroid problem','goiter','goitre','थायराइड','ಥೈರಾಯ್ಡ್','thyroid ki bimari','underactive thyroid','overactive thyroid','tsh high','tsh low','hashimoto','graves disease','thyriod','thyroid gland'],canonical:'Thyroid'},
-  {terms:['anemia','anaemia','blood deficiency','low hemoglobin','low haemoglobin','low hb','khoon ki kami','खून की कमी','ರಕ್ತಹೀನತೆ','iron deficiency','sickle cell','thalassemia','kamzori khoon','blood less','anmia'],canonical:'Anemia'},
-  {terms:['alzheimer','alzheimers','dementia','memory loss','forgetfulness','memory problem','bhulne ki bimari','भूलने की बीमारी','ಮರೆಗುಳಿ','neurodegeneration','alziemer','alzimer','brain memory'],canonical:'Alzheimer Disease'},
-  {terms:['epilepsy','epilepsi','seizure','fits','mircchi','mirgi','मिर्गी','ಅಪಸ್ಮಾರ','convulsion','fitting','seizure disorder','epelepsy','eplepsy','jhatke','jhatka'],canonical:'Epilepsy'},
-  {terms:['obesity','obese','overweight','fat','motapa','मोटापा','ಬೊಜ್ಜು','weight loss','bariatric','bmi high','weight problem','too much weight','fat problem'],canonical:'Obesity'},
-  {terms:['fever','bukhar','बुखार','ಜ್ವರ','pyrexia','high temperature','viral fever','high fever','bukar'],canonical:'Fever'},
-  {terms:['typhoid','tyfoid','typhiod','enteric fever','typhoid fever','मियादी बुखार','typhoid ki bimari'],canonical:'Typhoid'},
-  {terms:['cholesterol','high cholesterol','lipids','dyslipidemia','cholestrol','colesterol','high lipid','fat in blood','triglycerides'],canonical:'Hyperlipidemia'},
-  {terms:['pcod','pcos','polycystic ovary','polycystic ovarian','ovary problem','irregular periods','no periods','hormonal imbalance','ovarian cyst'],canonical:'Polycystic Ovary Syndrome'},
-  {terms:['copd','lung disease','emphysema','chronic bronchitis','lung problem','smoking lung','smoker lung','phefdon ki bimari','फेफड़े','ಶ್ವಾಸಕೋಶ'],canonical:'COPD'},
+"use strict";
+/* ═══════════════════════════════════════════════════════════
+   ClinicalTrials India Finder
+   ─────────────────────────────────────────────────────────── */
+const CONFIG = {
+  version: "3.0",
+  updated: "2026-09-20",
+  api: "https://clinicaltrials.gov/api/v2/studies",
+  pageSize: 20,
+
+  /* ── AI layer ───────────────────────────────────────────
+     Leave this empty and every AI button stays hidden — the
+     site works fully without it.
+     To switch it on, deploy the Cloudflare Worker that ships
+     with this repo (ai-proxy-worker.js) and paste its URL:
+        aiEndpoint: "https://ct-india-ai.<you>.workers.dev"
+     The API key lives in the Worker, never in this file.
+     Never paste an API key below — this file is public.   */
+  aiEndpoint: ""
+};
+
+/* ── Everyday words → registry terms ──────────────────────
+   The registry only understands medical English. Indians
+   search in three languages, four scripts and a lot of
+   creative spelling. This map is the bridge.              */
+const TERMS = [
+  {c:"Diabetes Mellitus", t:["diabetes","diabetis","diabeties","diabtes","dibaetes","diabetic","sugar","sugar disease","sugar problem","blood sugar","high sugar","sugar ki bimari","madhumeh","madhumeha","मधुमेह","शुगर","ಮಧುಮೇಹ","ಸಕ್ಕರೆ ಕಾಯಿಲೆ","ಸಕ್ಕರೆ ರೋಗ","type 2 diabetes","type 1 diabetes","t2dm","t1dm","insulin","hyperglycemia"]},
+  {c:"Hypertension", t:["hypertension","hypertention","hipertension","high bp","bp high","high blood pressure","blood pressure","blood presure","bp problem","bp ki bimari","htn","raktachaap","रक्तचाप","उच्च रक्तचाप","ಅಧಿಕ ರಕ್ತದೊತ್ತಡ","ರಕ್ತದೊತ್ತಡ","high tension","pressure"]},
+  {c:"Tuberculosis", t:["tuberculosis","tubercolosis","tuberclosis","tb","t.b","kshay","kshaya","kshaya rog","क्षय","क्षय रोग","टीबी","ಕ್ಷಯ","ಕ್ಷಯರೋಗ","coughing blood","blood in cough","pulmonary tb","mdr tb","lung tb"]},
+  {c:"Breast Cancer", t:["breast cancer","breast tumor","breast lump","stan cancer","स्तन कैंसर","ಸ್ತನ ಕ್ಯಾನ್ಸರ್","mammary carcinoma"]},
+  {c:"Lung Cancer", t:["lung cancer","nsclc","sclc","फेफड़े का कैंसर","ಶ್ವಾಸಕೋಶ ಕ್ಯಾನ್ಸರ್"]},
+  {c:"Oral Cancer", t:["oral cancer","mouth cancer","tobacco cancer","gutka cancer","tongue cancer","मुंह का कैंसर","ಬಾಯಿ ಕ್ಯಾನ್ಸರ್","head and neck cancer"]},
+  {c:"Cervical Cancer", t:["cervical cancer","cervix cancer","hpv cancer","बच्चेदानी का कैंसर","ಗರ್ಭಕಂಠ ಕ್ಯಾನ್ಸರ್"]},
+  {c:"Neoplasms", t:["cancer","canser","cancur","kancer","tumor","tumour","carcinoma","malignancy","oncology","growth","lump","chemotherapy","कैंसर","कर्क रोग","ಕ್ಯಾನ್ಸರ್","leukemia","leukaemia","blood cancer","lymphoma","sarcoma","metastasis"]},
+  {c:"Coronary Artery Disease", t:["heart attack","heart disease","heart problem","cardiac","coronary","angina","chest pain","chati dard","seene mein dard","दिल की बीमारी","दिल का दौरा","हार्ट अटैक","ಹೃದಯ ರೋಗ","ಎದೆ ನೋವು","blockage","stent","bypass","ischemic heart"]},
+  {c:"Heart Failure", t:["heart failure","weak heart","cardiomyopathy","low ejection fraction","ef low","दिल कमजोर"]},
+  {c:"Stroke", t:["stroke","brain stroke","brain attack","paralysis","lakwa","laqwa","लकवा","पक्षाघात","ಪಾರ್ಶ್ವವಾಯು","ಲಕ್ವ","brain hemorrhage","brain bleed","face tedha"]},
+  {c:"Chronic Kidney Disease", t:["kidney","kidney disease","kidney failure","renal failure","ckd","dialysis","kidney problem","kidney ki bimari","किडनी","गुर्दा","ಮೂತ್ರಪಿಂಡ","creatinine high","nephropathy"]},
+  {c:"Liver Cirrhosis", t:["liver","liver disease","cirrhosis","fatty liver","nafld","liver failure","जिगर","ಯಕೃತ್ತು","liver problem"]},
+  {c:"Hepatitis B", t:["hepatitis","hepatitis b","hep b","hbv","jaundice","peelia","पीलिया","ಕಾಮಾಲೆ","yellow eyes"]},
+  {c:"Asthma", t:["asthma","asthama","astma","aasthma","dama","दमा","ಉಬ್ಬಸ","ಅಸ್ತಮಾ","breathing problem","breathlessness","wheezing","saans ki takleef","सांस","inhaler","shortness of breath"]},
+  {c:"COPD", t:["copd","emphysema","chronic bronchitis","smoker lung","smoking lung","फेफड़े की बीमारी","ಶ್ವಾಸಕೋಶ ರೋಗ"]},
+  {c:"Rheumatoid Arthritis", t:["arthritis","arthritus","joint pain","joint swelling","gathiya","गठिया","ಸಂಧಿವಾತ","rheumatoid","ra","knee pain","ghutne ka dard","ಮಂಡಿ ನೋವು","osteoarthritis"]},
+  {c:"Osteoporosis", t:["osteoporosis","weak bones","bone loss","हड्डी कमजोर","ಮೂಳೆ ದುರ್ಬಲ","fracture risk"]},
+  {c:"Depression", t:["depression","depressed","sad","low mood","उदासी","अवसाद","ಖಿನ್ನತೆ","mental health","mental illness","mann","mood disorder"]},
+  {c:"Anxiety Disorders", t:["anxiety","panic","panic attack","tension","घबराहट","ಆತಂಕ","stress disorder","ptsd","ocd"]},
+  {c:"Schizophrenia", t:["schizophrenia","psychosis","bipolar","mania","पागलपन","ಮನೋರೋಗ","severe mental illness"]},
+  {c:"Epilepsy", t:["epilepsy","epilepsi","seizure","fits","mirgi","mircchi","मिर्गी","ಅಪಸ್ಮಾರ","convulsion","jhatke"]},
+  {c:"Alzheimer Disease", t:["alzheimer","alzheimers","dementia","memory loss","forgetting","भूलने की बीमारी","ಮರೆಗುಳಿತನ","parkinson"]},
+  {c:"Thyroid Diseases", t:["thyroid","thyriod","hypothyroid","hyperthyroid","goiter","goitre","थायराइड","ಥೈರಾಯ್ಡ್","tsh high","hashimoto"]},
+  {c:"Anemia", t:["anemia","anaemia","anmia","low hemoglobin","low hb","khoon ki kami","खून की कमी","ರಕ್ತಹೀನತೆ","iron deficiency","sickle cell","thalassemia"]},
+  {c:"Obesity", t:["obesity","obese","overweight","motapa","मोटापा","ಬೊಜ್ಜು","weight loss","bariatric","bmi high"]},
+  {c:"Polycystic Ovary Syndrome", t:["pcod","pcos","polycystic ovary","irregular periods","no periods","ovarian cyst","मासिक धर्म","ಮುಟ್ಟಿನ ಸಮಸ್ಯೆ"]},
+  {c:"Infertility", t:["infertility","cannot conceive","ivf","no children","बांझपन","ಬಂಜೆತನ"]},
+  {c:"Dengue", t:["dengue","dengu","dengoo","platelet low","bone fever","डेंगू","ಡೆಂಗ್ಯೂ"]},
+  {c:"Malaria", t:["malaria","maleria","malariya","मलेरिया","ಮಲೇರಿಯಾ","plasmodium"]},
+  {c:"Typhoid Fever", t:["typhoid","tyfoid","enteric fever","मियादी बुखार","ಟೈಫಾಯಿಡ್"]},
+  {c:"COVID-19", t:["covid","covid19","covid-19","corona","coronavirus","long covid","कोविड","ಕೋವಿಡ್"]},
+  {c:"Dyslipidemias", t:["cholesterol","cholestrol","high cholesterol","triglycerides","lipid","फैट","ಕೊಬ್ಬು"]},
+  {c:"Cataract", t:["cataract","motiyabind","मोतियाबिंद","ಕಣ್ಣಿನ ಪೊರೆ","blurred vision","eye operation"]},
+  {c:"Diabetic Retinopathy", t:["retinopathy","eye damage diabetes","diabetic eye","आंख शुगर"]},
+  {c:"Psoriasis", t:["psoriasis","skin patches","सोरायसिस","ಸೋರಿಯಾಸಿಸ್"]},
+  {c:"Eczema", t:["eczema","atopic dermatitis","skin allergy","itching","खुजली","ತುರಿಕೆ"]},
+  {c:"HIV Infections", t:["hiv","aids","एचआईवी","ಎಚ್ಐವಿ"]},
+  {c:"Malnutrition", t:["malnutrition","undernutrition","stunting","wasting","कुपोषण","ಅಪೌಷ್ಟಿಕತೆ"]},
+  {c:"Migraine", t:["migraine","migrane","headache","sir dard","सिरदर्द","ತಲೆನೋವು"]},
+  {c:"Sickle Cell Disease", t:["sickle cell","sickle","हंसिया कोशिका"]},
+  {c:"Snake Bites", t:["snake bite","snakebite","सांप काटना","ಹಾವು ಕಡಿತ"]}
 ];
+const TERM_INDEX = TERMS.flatMap(e => e.t.map(t => ({t: t.toLowerCase(), c: e.c})));
 
-function lev(a,b){
-  const m=a.length,n=b.length;
-  const d=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
-  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
-    d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);
-  return d[m][n];
-}
-
-function cleanInput(raw){
-  return raw.toLowerCase()
-    .replace(/[,;|/\\@#$%^&*()_+=\[\]{}<>'"!?~`]/g,' ')
-    .replace(/\s+/g,' ').trim();
-}
-
-function smartResolve(rawInput){
-  const cleaned=cleanInput(rawInput);
-  if(!cleaned) return {canonical:rawInput,matched:false};
-  for(const e of MEDICAL_MAP) for(const t of e.terms)
-    if(cleaned===t.toLowerCase()) return {canonical:e.canonical,matched:cleaned!==e.canonical.toLowerCase()};
-  for(const e of MEDICAL_MAP) for(const t of e.terms){
-    const tl=t.toLowerCase();
-    if(cleaned.includes(tl)||tl.includes(cleaned)) return {canonical:e.canonical,matched:true};
-  }
-  const words=cleaned.split(' ').filter(w=>w.length>2);
-  for(const w of words) for(const e of MEDICAL_MAP) for(const t of e.terms){
-    const tl=t.toLowerCase();
-    if(tl.includes(w)||w.includes(tl)) return {canonical:e.canonical,matched:true};
-  }
-  let bestScore=Infinity,bestCanonical=null;
-  for(const e of MEDICAL_MAP) for(const t of e.terms){
-    const tl=t.toLowerCase();
-    const thresh=tl.length<=5?1:tl.length<=8?2:3;
-    for(const inp of [cleaned,...cleaned.split(' ')]){
-      if(Math.abs(inp.length-tl.length)>thresh) continue;
-      const dist=lev(inp,tl);
-      if(dist<=thresh&&dist<bestScore){bestScore=dist;bestCanonical=e.canonical;}
-    }
-  }
-  return bestCanonical?{canonical:bestCanonical,matched:true}:{canonical:cleaned,matched:false};
-}
-
-/* Language strings */
-const LANG={
+/* ── i18n ──────────────────────────────────────────────── */
+const I18N = {
   en:{
-    subtitle:"Search active clinical trials across India — even if you don't know the exact medical term. Built for every Indian patient.",
-    placeholder:'e.g. sugar disease, high bp, chest pain, kshay, TB...',
-    btn:'Search Trials',searching:'Searching…',quickLabel:'Quick:',
-    searchLabel:'Search by disease, symptom, or condition — in any language',
-    s1:'Trials Found',s2:'Recruiting Now',s3:'India Sites',
-    emptyTitle:'No trials found',emptyText:'Try a symptom like "chest pain" or use the quick tags above',
-    summaryLabel:'Trial Overview',eligLabel:'Who Can Join',
-    viewTrial:'View Full Trial →',copyBtn:'📋 Copy Info',
-    statusMain:(q)=>`Searching for "${q}" trials in India…`,
-    statusSub:'Connecting to ClinicalTrials.gov (NIH)',
-    smartMsg:(o,f)=>`We understood <strong>"${o}"</strong> as <strong>${f}</strong> and searched for it.`,
-    disclaimer:'<strong>⚠️ Medical Disclaimer:</strong> This tool is for informational purposes only. Always consult a qualified physician before enrolling in any clinical trial. Data sourced from ClinicalTrials.gov (NIH, USA).',
-    moreElig:'+ more criteria on the full trial page',
-    indiaFilterOn:'Showing only trials with confirmed India sites',
-    indiaFilterOff:'Showing all trials'
-  },
-  kn:{
-    subtitle:'ಭಾರತದಾದ್ಯಂತ ಸಕ್ರಿಯ ಕ್ಲಿನಿಕಲ್ ಟ್ರಯಲ್‌ಗಳನ್ನು ಹುಡುಕಿ — ನಿಖರ ವೈದ್ಯಕೀಯ ಪದ ತಿಳಿಯದಿದ್ದರೂ ಸರಿ.',
-    placeholder:'ಉದಾ: ಸಕ್ಕರೆ ರೋಗ, ಹೈ ಬಿಪಿ, ಎದೆ ನೋವು, ಕ್ಷಯ...',
-    btn:'ಟ್ರಯಲ್ ಹುಡುಕಿ',searching:'ಹುಡುಕಲಾಗುತ್ತಿದೆ…',quickLabel:'ತ್ವರಿತ:',
-    searchLabel:'ರೋಗ, ಲಕ್ಷಣ ಅಥವಾ ಸ್ಥಿತಿಯ ಹೆಸರು ಟೈಪ್ ಮಾಡಿ',
-    s1:'ಟ್ರಯಲ್‌ಗಳು',s2:'ನೇಮಕಾತಿ ತೆರೆದಿದೆ',s3:'ಭಾರತ ತಾಣಗಳು',
-    emptyTitle:'ಯಾವುದೇ ಟ್ರಯಲ್ ಸಿಗಲಿಲ್ಲ',emptyText:'ಬೇರೆ ಲಕ್ಷಣ ಅಥವಾ ರೋಗದ ಹೆಸರು ಪ್ರಯತ್ನಿಸಿ',
-    summaryLabel:'ಟ್ರಯಲ್ ವಿವರ',eligLabel:'ಯಾರು ಸೇರಬಹುದು',
-    viewTrial:'ಪೂರ್ಣ ಮಾಹಿತಿ ನೋಡಿ →',copyBtn:'📋 ಕಾಪಿ',
-    statusMain:(q)=>`"${q}" ಟ್ರಯಲ್‌ಗಳನ್ನು ಭಾರತದಲ್ಲಿ ಹುಡುಕಲಾಗುತ್ತಿದೆ…`,
-    statusSub:'ClinicalTrials.gov ಗೆ ಸಂಪರ್ಕ ಮಾಡಲಾಗುತ್ತಿದೆ',
-    smartMsg:(o,f)=>`<strong>"${o}"</strong> ಅನ್ನು <strong>${f}</strong> ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ.`,
-    disclaimer:'<strong>⚠️ ವೈದ್ಯಕೀಯ ಎಚ್ಚರಿಕೆ:</strong> ಯಾವುದೇ ಟ್ರಯಲ್‌ನಲ್ಲಿ ಭಾಗವಹಿಸುವ ಮೊದಲು ತಜ್ಞ ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.',
-    moreElig:'+ ಹೆಚ್ಚಿನ ಮಾನದಂಡ ಟ್ರಯಲ್ ಪೇಜ್‌ನಲ್ಲಿ ನೋಡಿ',
-    indiaFilterOn:'ಭಾರತದಲ್ಲಿ ತಾಣಗಳಿರುವ ಟ್ರಯಲ್‌ಗಳು ಮಾತ್ರ',
-    indiaFilterOff:'ಎಲ್ಲಾ ಟ್ರಯಲ್‌ಗಳು'
+    h1:"Find clinical trials recruiting in India.",
+    lede:"Search in everyday language. See the study status, eligibility clues, Indian hospitals and contact details — then verify everything with the trial team.",
+    liveT:"studies recruiting in India right now",
+    qLabel:"What is the illness?",
+    qHint:"Everyday words are fine — sugar, high BP, kshay, ಸಕ್ಕರೆ ಕಾಯಿಲೆ. Spelling does not have to be right.",
+    ph:"sugar disease, high bp, kshay, breast cancer…",
+    go:"Search", going:"Searching…",
+    commonLabel:"Common:", recentLabel:"You looked up:",
+    lStatus:"Recruitment", lPhase:"Phase", lState:"State", lSort:"Order",
+    indiaOnlyLabel:"Only trials with a confirmed India site",
+    working:"Searching ClinicalTrials.gov…",
+    emptyH:"Nothing matched that.",
+    emptyP:"Try a simpler word — just “cancer” instead of the exact type — or widen the recruitment filter.",
+    more:"Load more results",
+    understood:(raw,term)=>`Searched for <b>${term}</b> — that is the registry's word for “${raw}”.`,
+    showing:(n,total)=>`${n} shown${total!=null?` of ${total} found`:""}`,
+    checked:(d)=>`Checked ${d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}`,
+    phase:{EARLY_PHASE1:"Earliest human testing — very small, safety only",PHASE1:"Phase 1 — a small group, mainly checking safety and dose",PHASE2:"Phase 2 — a few hundred people, checking whether it works",PHASE3:"Phase 3 — large study comparing it against current treatment",PHASE4:"Phase 4 — long-term study of an already approved treatment",NA:"No drug phase — a device, procedure, or an observational study"},
+    status:{RECRUITING:"Taking people now",NOT_YET_RECRUITING:"Opening soon",ENROLLING_BY_INVITATION:"By invitation only",ACTIVE_NOT_RECRUITING:"Running, closed to new people",COMPLETED:"Finished",SUSPENDED:"Paused",TERMINATED:"Stopped early",WITHDRAWN:"Withdrawn",UNKNOWN:"Status not updated"},
+    about:"What the study is about", testing:"What is being tested", whoCan:"Who can join", words:"Words used in this study",
+    sitesH:(n)=>`Where in India (${n} ${n===1?"site":"sites"})`,
+    noSites:"No India site listed in the registry entry. Open the full record to check.",
+    facts:{sponsor:"Run by",people:"People needed",start:"Started",age:"Age",sex:"Sex",healthy:"Healthy volunteers"},
+    open:"Open full record", copy:"Copy details", share:"Send on WhatsApp", print:"Print for the doctor",
+    explain:"Explain in simple words",
+    copied:"Copied — paste it into a message.",
+    aiThinking:"Reading the trial…", aiTag:"Plain-language summary (AI-generated — verify with the doctor)",
+    errNet:"Could not reach ClinicalTrials.gov. Check the connection and try again.",
+    errEmpty:"Type an illness first.",
+    moreCriteria:"There are more conditions — the full record lists all of them.",
+    nearOn:"Sorted by distance from you.", nearFail:"Could not get your location — keeping the current order.",
+    anywhere:"Anywhere in India"
   },
   hi:{
-    subtitle:'पूरे भारत में क्लिनिकल ट्रायल खोजें — सही मेडिकल शब्द न पता हो तो भी चलेगा।',
-    placeholder:'जैसे: शुगर की बीमारी, हाई बीपी, सीने में दर्द, टीबी...',
-    btn:'ट्रायल खोजें',searching:'खोज रहे हैं…',quickLabel:'जल्दी:',
-    searchLabel:'बीमारी, लक्षण या स्थिति का नाम लिखें',
-    s1:'ट्रायल मिले',s2:'भर्ती खुली है',s3:'भारत में स्थान',
-    emptyTitle:'कोई ट्रायल नहीं मिला',emptyText:'कोई लक्षण जैसे "सीने में दर्द" आज़माएं',
-    summaryLabel:'ट्रायल विवरण',eligLabel:'कौन शामिल हो सकता है',
-    viewTrial:'पूरी जानकारी देखें →',copyBtn:'📋 कॉपी',
-    statusMain:(q)=>`"${q}" के ट्रायल भारत में खोजे जा रहे हैं…`,
-    statusSub:'ClinicalTrials.gov से जुड़ा जा रहा है',
-    smartMsg:(o,f)=>`<strong>"${o}"</strong> को <strong>${f}</strong> समझा गया।`,
-    disclaimer:'<strong>⚠️ चिकित्सा अस्वीकरण:</strong> किसी भी ट्रायल में शामिल होने से पहले योग्य चिकित्सक से परामर्श लें।',
-    moreElig:'+ और मानदंड ट्रायल पेज पर देखें',
-    indiaFilterOn:'केवल भारत में स्थान वाले ट्रायल दिखाए जा रहे हैं',
-    indiaFilterOff:'सभी ट्रायल दिखाए जा रहे हैं'
+    h1:"ऐसा क्लिनिकल ट्रायल खोजें जिसमें आप सच में शामिल हो सकें।",
+    lede:"भारत में भर्ती कर रहे अध्ययन खोजें — जैसे बोलते हैं वैसे ही लिखिए। अस्पताल, शहर और फ़ोन नंबर मिलेगा।",
+    liveT:"अध्ययन इस समय भारत में भर्ती कर रहे हैं",
+    qLabel:"बीमारी क्या है?",
+    qHint:"रोज़मर्रा के शब्द चलेंगे — शुगर, हाई बीपी, क्षय। वर्तनी सही होना ज़रूरी नहीं।",
+    ph:"शुगर, हाई बीपी, क्षय, स्तन कैंसर…",
+    go:"खोजें", going:"खोज रहे हैं…",
+    commonLabel:"आम:", recentLabel:"आपने देखा:",
+    lStatus:"भर्ती", lPhase:"चरण", lState:"राज्य", lSort:"क्रम",
+    indiaOnlyLabel:"केवल वे ट्रायल जिनका भारत में केंद्र है",
+    working:"ClinicalTrials.gov पर खोजा जा रहा है…",
+    emptyH:"कुछ नहीं मिला।",
+    emptyP:"आसान शब्द आज़माएँ — पूरा नाम नहीं, बस “कैंसर”। या भर्ती फ़िल्टर चौड़ा करें।",
+    more:"और नतीजे दिखाएँ",
+    understood:(raw,term)=>`<b>${term}</b> के लिए खोजा — रजिस्ट्री में “${raw}” को यही कहते हैं।`,
+    showing:(n,total)=>`${n} दिखाए गए${total!=null?`, कुल ${total} मिले`:""}`,
+    checked:(d)=>`जाँच ${d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}`,
+    phase:{EARLY_PHASE1:"सबसे शुरुआती मानव परीक्षण — बहुत छोटा, केवल सुरक्षा",PHASE1:"चरण 1 — थोड़े लोग, मुख्यतः सुरक्षा और मात्रा की जाँच",PHASE2:"चरण 2 — कुछ सौ लोग, असर की जाँच",PHASE3:"चरण 3 — बड़ा अध्ययन, मौजूदा इलाज से तुलना",PHASE4:"चरण 4 — पहले से मंज़ूर इलाज का दीर्घकालीन अध्ययन",NA:"कोई दवा-चरण नहीं — उपकरण, प्रक्रिया या अवलोकन अध्ययन"},
+    status:{RECRUITING:"अभी लोग ले रहे हैं",NOT_YET_RECRUITING:"जल्द शुरू होगा",ENROLLING_BY_INVITATION:"केवल आमंत्रण पर",ACTIVE_NOT_RECRUITING:"चल रहा है, नए लोग नहीं",COMPLETED:"पूरा हो गया",SUSPENDED:"रोका गया",TERMINATED:"बीच में बंद",WITHDRAWN:"वापस लिया",UNKNOWN:"स्थिति अद्यतन नहीं"},
+    about:"अध्ययन किस बारे में है", testing:"क्या परखा जा रहा है", whoCan:"कौन शामिल हो सकता है", words:"इस अध्ययन में आए शब्द",
+    sitesH:(n)=>`भारत में कहाँ (${n} केंद्र)`,
+    noSites:"रजिस्ट्री में भारत का कोई केंद्र दर्ज नहीं। पूरा रिकॉर्ड देखें।",
+    facts:{sponsor:"संचालक",people:"कितने लोग चाहिए",start:"शुरुआत",age:"आयु",sex:"लिंग",healthy:"स्वस्थ स्वयंसेवक"},
+    open:"पूरा रिकॉर्ड खोलें", copy:"विवरण कॉपी करें", share:"व्हाट्सएप पर भेजें", print:"डॉक्टर के लिए प्रिंट करें",
+    explain:"आसान भाषा में समझाएँ",
+    copied:"कॉपी हो गया।",
+    aiThinking:"ट्रायल पढ़ा जा रहा है…", aiTag:"आसान भाषा में सार (AI द्वारा — डॉक्टर से पुष्टि करें)",
+    errNet:"ClinicalTrials.gov तक नहीं पहुँच सके। कनेक्शन जाँचें।",
+    errEmpty:"पहले बीमारी लिखें।",
+    moreCriteria:"और भी शर्तें हैं — पूरा रिकॉर्ड देखें।",
+    nearOn:"आपसे दूरी के हिसाब से क्रम।", nearFail:"स्थान नहीं मिल सका — क्रम वही रहेगा।",
+    anywhere:"भारत में कहीं भी"
+  },
+  kn:{
+    h1:"ನೀವು ನಿಜವಾಗಿ ಸೇರಬಹುದಾದ ಕ್ಲಿನಿಕಲ್ ಟ್ರಯಲ್ ಹುಡುಕಿ.",
+    lede:"ಭಾರತದಲ್ಲಿ ಜನರನ್ನು ಸೇರಿಸಿಕೊಳ್ಳುತ್ತಿರುವ ಅಧ್ಯಯನಗಳನ್ನು ಹುಡುಕಿ — ನೀವು ಹೇಳುವ ಹಾಗೆಯೇ ಬರೆಯಿರಿ. ಆಸ್ಪತ್ರೆ, ಊರು ಮತ್ತು ಫೋನ್ ನಂಬರ್ ಸಿಗುತ್ತದೆ.",
+    liveT:"ಅಧ್ಯಯನಗಳು ಈಗ ಭಾರತದಲ್ಲಿ ಜನರನ್ನು ಸೇರಿಸಿಕೊಳ್ಳುತ್ತಿವೆ",
+    qLabel:"ಯಾವ ಕಾಯಿಲೆ?",
+    qHint:"ದಿನನಿತ್ಯದ ಪದಗಳೇ ಸಾಕು — ಸಕ್ಕರೆ, ಬಿಪಿ, ಕ್ಷಯ. ಸ್ಪೆಲ್ಲಿಂಗ್ ಸರಿ ಇರಬೇಕಾಗಿಲ್ಲ.",
+    ph:"ಸಕ್ಕರೆ ಕಾಯಿಲೆ, ಬಿಪಿ, ಕ್ಷಯ, ಸ್ತನ ಕ್ಯಾನ್ಸರ್…",
+    go:"ಹುಡುಕಿ", going:"ಹುಡುಕುತ್ತಿದೆ…",
+    commonLabel:"ಸಾಮಾನ್ಯ:", recentLabel:"ನೀವು ನೋಡಿದ್ದು:",
+    lStatus:"ಸೇರ್ಪಡೆ", lPhase:"ಹಂತ", lState:"ರಾಜ್ಯ", lSort:"ಕ್ರಮ",
+    indiaOnlyLabel:"ಭಾರತದಲ್ಲಿ ಕೇಂದ್ರ ಇರುವ ಟ್ರಯಲ್‌ಗಳು ಮಾತ್ರ",
+    working:"ClinicalTrials.gov ನಲ್ಲಿ ಹುಡುಕಲಾಗುತ್ತಿದೆ…",
+    emptyH:"ಏನೂ ಸಿಗಲಿಲ್ಲ.",
+    emptyP:"ಸರಳ ಪದ ಪ್ರಯತ್ನಿಸಿ — ಪೂರ್ಣ ಹೆಸರಲ್ಲ, ಬರೀ “ಕ್ಯಾನ್ಸರ್”. ಅಥವಾ ಫಿಲ್ಟರ್ ಸಡಿಲಿಸಿ.",
+    more:"ಇನ್ನಷ್ಟು ತೋರಿಸಿ",
+    understood:(raw,term)=>`<b>${term}</b> ಗಾಗಿ ಹುಡುಕಲಾಗಿದೆ — ರಿಜಿಸ್ಟ್ರಿಯಲ್ಲಿ “${raw}” ಗೆ ಇದೇ ಪದ.`,
+    showing:(n,total)=>`${n} ತೋರಿಸಲಾಗಿದೆ${total!=null?`, ಒಟ್ಟು ${total}`:""}`,
+    checked:(d)=>`ಪರಿಶೀಲನೆ ${d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}`,
+    phase:{EARLY_PHASE1:"ಅತಿ ಮೊದಲ ಮಾನವ ಪರೀಕ್ಷೆ — ಬಹಳ ಚಿಕ್ಕದು, ಸುರಕ್ಷತೆ ಮಾತ್ರ",PHASE1:"ಹಂತ 1 — ಕೆಲವೇ ಜನ, ಮುಖ್ಯವಾಗಿ ಸುರಕ್ಷತೆ ಮತ್ತು ಡೋಸ್",PHASE2:"ಹಂತ 2 — ಕೆಲವು ನೂರು ಜನ, ಪರಿಣಾಮದ ಪರೀಕ್ಷೆ",PHASE3:"ಹಂತ 3 — ದೊಡ್ಡ ಅಧ್ಯಯನ, ಈಗಿನ ಚಿಕಿತ್ಸೆಯೊಂದಿಗೆ ಹೋಲಿಕೆ",PHASE4:"ಹಂತ 4 — ಈಗಾಗಲೇ ಅನುಮೋದಿತ ಚಿಕಿತ್ಸೆಯ ದೀರ್ಘಕಾಲೀನ ಅಧ್ಯಯನ",NA:"ಔಷಧ ಹಂತವಿಲ್ಲ — ಉಪಕರಣ, ಶಸ್ತ್ರಚಿಕಿತ್ಸೆ ಅಥವಾ ವೀಕ್ಷಣಾ ಅಧ್ಯಯನ"},
+    status:{RECRUITING:"ಈಗ ಜನರನ್ನು ಸೇರಿಸುತ್ತಿದೆ",NOT_YET_RECRUITING:"ಶೀಘ್ರದಲ್ಲೇ ಆರಂಭ",ENROLLING_BY_INVITATION:"ಆಹ್ವಾನದ ಮೇಲೆ ಮಾತ್ರ",ACTIVE_NOT_RECRUITING:"ನಡೆಯುತ್ತಿದೆ, ಹೊಸಬರಿಗೆ ಇಲ್ಲ",COMPLETED:"ಮುಗಿದಿದೆ",SUSPENDED:"ತಾತ್ಕಾಲಿಕ ಸ್ಥಗಿತ",TERMINATED:"ಮಧ್ಯದಲ್ಲೇ ನಿಲ್ಲಿಸಲಾಗಿದೆ",WITHDRAWN:"ಹಿಂಪಡೆಯಲಾಗಿದೆ",UNKNOWN:"ಸ್ಥಿತಿ ನವೀಕರಿಸಿಲ್ಲ"},
+    about:"ಅಧ್ಯಯನ ಯಾವುದರ ಬಗ್ಗೆ", testing:"ಏನನ್ನು ಪರೀಕ್ಷಿಸಲಾಗುತ್ತಿದೆ", whoCan:"ಯಾರು ಸೇರಬಹುದು", words:"ಈ ಅಧ್ಯಯನದಲ್ಲಿ ಬಂದ ಪದಗಳು",
+    sitesH:(n)=>`ಭಾರತದಲ್ಲಿ ಎಲ್ಲಿ (${n} ಕೇಂದ್ರ)`,
+    noSites:"ರಿಜಿಸ್ಟ್ರಿಯಲ್ಲಿ ಭಾರತದ ಕೇಂದ್ರ ದಾಖಲಾಗಿಲ್ಲ. ಪೂರ್ಣ ದಾಖಲೆ ನೋಡಿ.",
+    facts:{sponsor:"ನಡೆಸುವವರು",people:"ಎಷ್ಟು ಜನ ಬೇಕು",start:"ಆರಂಭ",age:"ವಯಸ್ಸು",sex:"ಲಿಂಗ",healthy:"ಆರೋಗ್ಯವಂತ ಸ್ವಯಂಸೇವಕರು"},
+    open:"ಪೂರ್ಣ ದಾಖಲೆ ತೆರೆಯಿರಿ", copy:"ವಿವರ ಕಾಪಿ ಮಾಡಿ", share:"ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಕಳಿಸಿ", print:"ಡಾಕ್ಟರ್‌ಗಾಗಿ ಪ್ರಿಂಟ್",
+    explain:"ಸರಳ ಭಾಷೆಯಲ್ಲಿ ವಿವರಿಸಿ",
+    copied:"ಕಾಪಿ ಆಯಿತು.",
+    aiThinking:"ಟ್ರಯಲ್ ಓದಲಾಗುತ್ತಿದೆ…", aiTag:"ಸರಳ ಭಾಷೆಯ ಸಾರಾಂಶ (AI — ಡಾಕ್ಟರ್ ಬಳಿ ಖಚಿತಪಡಿಸಿ)",
+    errNet:"ClinicalTrials.gov ತಲುಪಲಾಗಲಿಲ್ಲ. ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ.",
+    errEmpty:"ಮೊದಲು ಕಾಯಿಲೆ ಬರೆಯಿರಿ.",
+    moreCriteria:"ಇನ್ನೂ ಷರತ್ತುಗಳಿವೆ — ಪೂರ್ಣ ದಾಖಲೆ ನೋಡಿ.",
+    nearOn:"ನಿಮ್ಮಿಂದ ದೂರದ ಪ್ರಕಾರ ಕ್ರಮ.", nearFail:"ಸ್ಥಳ ಸಿಗಲಿಲ್ಲ — ಕ್ರಮ ಹಾಗೆಯೇ ಇರುತ್ತದೆ.",
+    anywhere:"ಭಾರತದಲ್ಲಿ ಎಲ್ಲಿಯಾದರೂ"
   }
 };
 
-let currentLang='en';
-let allStudies=[]; // global store for India Sites filter
-let indiaFilterActive=false;
+/* ── State ─────────────────────────────────────────────── */
+const S = {
+  lang: "en",
+  studies: [],          // everything fetched so far, this search
+  token: null,          // nextPageToken
+  total: null,
+  lastFetched: null,          // time of the latest successful registry fetch
+  term: "",             // resolved registry term
+  busy: false,
+  ctrl: null,           // AbortController for the in-flight search
+  here: null            // {lat, lon} once geolocation succeeds
+};
+const $  = id => document.getElementById(id);
+const L  = () => I18N[S.lang];
 
-function setLang(lang){
-  currentLang=lang;
-  const L=LANG[lang];
-  document.getElementById('subtitleText').textContent=L.subtitle;
-  document.getElementById('diseaseInput').placeholder=L.placeholder;
-  document.getElementById('searchBtn').textContent=L.btn;
-  document.getElementById('quickLabel').textContent=L.quickLabel;
-  document.getElementById('searchLabelText').textContent=L.searchLabel;
-  document.getElementById('statLabel1').textContent=L.s1;
-  document.getElementById('statLabel2').textContent=L.s2;
-  document.getElementById('statLabel3').textContent=L.s3;
-  document.getElementById('emptyTitle').textContent=L.emptyTitle;
-  document.getElementById('emptyText').textContent=L.emptyText;
-  document.getElementById('disclaimerBox').innerHTML=L.disclaimer;
-  ['en','kn','hi'].forEach(l=>{
-    const btn=document.getElementById(`btn-${l}`);
-    btn.classList.toggle('active',l===lang);
-    btn.setAttribute('aria-pressed', l===lang?'true':'false');
-  });
+/* ── Safety: everything from the registry is untrusted text ── */
+function esc(s){
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
 
-function quickSearch(d){
-  document.getElementById('diseaseInput').value=d;
-  searchTrials();
+/* ── Matching the everyday word to the registry word ────── */
+function normalize(s){
+  return s.toLowerCase()
+    .replace(/[.,;:|/\\@#$%^&*()_+=\[\]{}<>'"!?~`]/g," ")
+    .replace(/\s+/g," ").trim();
+}
+function editDistance(a,b){
+  if (Math.abs(a.length - b.length) > 3) return 99;
+  let prev = Array.from({length: b.length + 1}, (_,j) => j);
+  for (let i = 1; i <= a.length; i++){
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++){
+      cur[j] = a[i-1] === b[j-1]
+        ? prev[j-1]
+        : 1 + Math.min(prev[j], cur[j-1], prev[j-1]);
+    }
+    prev = cur;
+  }
+  return prev[b.length];
+}
+function resolveTerm(raw){
+  const q = normalize(raw);
+  if (!q) return {term: raw, changed: false};
+
+  for (const e of TERM_INDEX) if (q === e.t) return {term: e.c, changed: q !== e.c.toLowerCase()};
+  for (const e of TERM_INDEX) if (e.t.length > 3 && (q.includes(e.t) || e.t.includes(q))) return {term: e.c, changed: true};
+
+  const words = q.split(" ").filter(w => w.length > 2);
+  for (const w of words) for (const e of TERM_INDEX){
+    if (e.t.length > 3 && (e.t.includes(w) || w.includes(e.t))) return {term: e.c, changed: true};
+  }
+  let best = null, bestD = 99;
+  for (const cand of [q, ...words]) for (const e of TERM_INDEX){
+    const tol = e.t.length <= 5 ? 1 : e.t.length <= 9 ? 2 : 3;
+    const d = editDistance(cand, e.t);
+    if (d <= tol && d < bestD){ bestD = d; best = e.c; }
+  }
+  return best ? {term: best, changed: true} : {term: raw.trim(), changed: false};
 }
 
-function getPhaseClass(p){
-  if(!p||p==='N/A') return 'phase-na';
-  if(p.includes('1')) return 'phase-1';
-  if(p.includes('2')) return 'phase-2';
-  if(p.includes('3')) return 'phase-3';
-  if(p.includes('4')) return 'phase-4';
-  return 'phase-na';
+/* ── Reading a study record ─────────────────────────────── */
+const P = s => s.protocolSection || {};
+const get = (o, path, fb) => path.split(".").reduce((a,k) => (a && a[k] != null ? a[k] : undefined), o) ?? fb;
+
+function statusBucket(st){
+  if (st === "RECRUITING") return "open";
+  if (st === "NOT_YET_RECRUITING" || st === "ENROLLING_BY_INVITATION") return "soon";
+  return "shut";
 }
-function getStatusClass(s){
-  if(!s) return 'completed';
-  if(s==='RECRUITING') return 'recruiting';
-  if(s==='NOT_YET_RECRUITING') return 'not-recruiting';
-  return 'completed';
+function indiaSites(s){
+  return (get(P(s), "contactsLocationsModule.locations", []) || [])
+    .filter(l => l && l.country === "India");
 }
-function formatStatus(s){return s?s.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase()):'Unknown';}
-function extractIndia(locs){
-  if(!locs) return [];
-  return locs.filter(l=>l.country==='India')
-    .map(l=>[l.city,l.facility].filter(Boolean).join(' — '))
-    .filter(Boolean).slice(0,5);
+function phaseOf(s){
+  const p = get(P(s), "designModule.phases", []) || [];
+  if (!p.length) return "NA";
+  if (p.includes("PHASE4")) return "PHASE4";
+  if (p.includes("PHASE3")) return "PHASE3";
+  if (p.includes("PHASE2")) return "PHASE2";
+  if (p.includes("PHASE1")) return "PHASE1";
+  if (p.includes("EARLY_PHASE1")) return "EARLY_PHASE1";
+  return "NA";
 }
 
-const JARGON=[
-  [/randomized controlled trial/gi,'a study where patients are randomly assigned to groups'],
-  [/randomized/gi,'randomly assigned'],[/placebo[\s-]controlled/gi,'compared against a dummy pill'],
-  [/double[\s-]blind/gi,'neither doctor nor patient knows the treatment type'],
-  [/open[\s-]label/gi,'both doctor and patient know the treatment'],
-  [/multicenter/gi,'conducted at multiple hospitals'],[/Phase (I|II|III|IV)/gi,'Phase $1 trial'],
-  [/subcutaneous(ly)?/gi,'injected under the skin'],[/intravenous(ly)?/gi,'given through a vein'],
-  [/efficacy/gi,'effectiveness'],[/adverse events?/gi,'side effects'],
-  [/cohort/gi,'group of patients'],[/pharmacokinetics/gi,'how the drug moves through the body'],
-  [/biomarker/gi,'biological measurement'],[/concomitant/gi,'taken at the same time as other medicines'],
-  [/primary endpoint/gi,'main goal of the study'],
+/* Registry summaries are written for regulators, not patients.
+   Rewriting them word-by-word wrecks the grammar and quietly
+   changes meaning — which in a medical context is not a small
+   thing. So the summary is left intact, and the jargon that
+   actually appears in it is explained underneath.            */
+const GLOSSARY = [
+  {id:"rand",  re:/randomi[sz]/i,
+   en:["Randomised","which treatment you get is decided by chance, not chosen by the doctor"],
+   hi:["रैंडमाइज़्ड","आपको कौन-सा इलाज मिलेगा यह संयोग से तय होता है, डॉक्टर चुनते नहीं"],
+   kn:["ರ್ಯಾಂಡಮೈಸ್ಡ್","ಯಾವ ಚಿಕಿತ್ಸೆ ಸಿಗುತ್ತದೆ ಎಂಬುದು ಆಕಸ್ಮಿಕವಾಗಿ ನಿರ್ಧಾರ, ಡಾಕ್ಟರ್ ಆಯ್ಕೆ ಮಾಡುವುದಿಲ್ಲ"]},
+  {id:"plac",  re:/placebo/i,
+   en:["Placebo","a dummy treatment with no medicine in it, used for comparison"],
+   hi:["प्लेसीबो","बिना दवा वाला नकली इलाज, तुलना के लिए दिया जाता है"],
+   kn:["ಪ್ಲಸೀಬೊ","ಔಷಧವಿಲ್ಲದ ನಕಲಿ ಚಿಕಿತ್ಸೆ, ಹೋಲಿಕೆಗಾಗಿ ಕೊಡಲಾಗುತ್ತದೆ"]},
+  {id:"blind", re:/double[- ]blind|single[- ]blind|\bmasked\b/i,
+   en:["Blinded","you, and often the doctor too, are not told which treatment you are on"],
+   hi:["ब्लाइंडेड","आपको, और अक्सर डॉक्टर को भी, नहीं बताया जाता कि कौन-सा इलाज चल रहा है"],
+   kn:["ಬ್ಲೈಂಡೆಡ್","ನಿಮಗೆ, ಮತ್ತು ಹೆಚ್ಚಾಗಿ ಡಾಕ್ಟರ್‌ಗೂ, ಯಾವ ಚಿಕಿತ್ಸೆ ಎಂದು ತಿಳಿಸುವುದಿಲ್ಲ"]},
+  {id:"open",  re:/open[- ]label/i,
+   en:["Open-label","everyone knows which treatment is being given"],
+   hi:["ओपन-लेबल","सबको पता होता है कि कौन-सा इलाज दिया जा रहा है"],
+   kn:["ಓಪನ್-ಲೇಬಲ್","ಯಾವ ಚಿಕಿತ್ಸೆ ಕೊಡಲಾಗುತ್ತಿದೆ ಎಂದು ಎಲ್ಲರಿಗೂ ಗೊತ್ತಿರುತ್ತದೆ"]},
+  {id:"multi", re:/multi[- ]?cent(er|re)/i,
+   en:["Multicentre","the same study runs at several hospitals at once"],
+   hi:["मल्टीसेंटर","यही अध्ययन एक साथ कई अस्पतालों में चलता है"],
+   kn:["ಮಲ್ಟಿಸೆಂಟರ್","ಇದೇ ಅಧ್ಯಯನ ಏಕಕಾಲಕ್ಕೆ ಹಲವು ಆಸ್ಪತ್ರೆಗಳಲ್ಲಿ ನಡೆಯುತ್ತದೆ"]},
+  {id:"sc",    re:/subcutaneous/i,
+   en:["Subcutaneous","injected just under the skin"],
+   hi:["सबक्यूटेनियस","त्वचा के ठीक नीचे इंजेक्शन"],
+   kn:["ಸಬ್‌ಕ್ಯುಟೇನಿಯಸ್","ಚರ್ಮದ ಕೆಳಗೆ ಚುಚ್ಚುಮದ್ದು"]},
+  {id:"iv",    re:/intravenous|\bIV\b/,
+   en:["Intravenous","given through a drip into a vein"],
+   hi:["इंट्रावीनस","नस में ड्रिप के ज़रिए दिया जाता है"],
+   kn:["ಇಂಟ್ರಾವೀನಸ್","ರಕ್ತನಾಳಕ್ಕೆ ಡ್ರಿಪ್ ಮೂಲಕ ಕೊಡಲಾಗುತ್ತದೆ"]},
+  {id:"eff",   re:/efficacy|tolerability/i,
+   en:["Efficacy and tolerability","how well it works, and how well the body handles it"],
+   hi:["प्रभाव और सहनशीलता","यह कितना असर करता है, और शरीर इसे कितना सह पाता है"],
+   kn:["ಪರಿಣಾಮ ಮತ್ತು ಸಹನೀಯತೆ","ಎಷ್ಟು ಕೆಲಸ ಮಾಡುತ್ತದೆ, ದೇಹ ಎಷ್ಟು ಸಹಿಸುತ್ತದೆ"]},
+  {id:"ae",    re:/adverse events?|safety profile/i,
+   en:["Adverse events","side effects, recorded whether or not the drug caused them"],
+   hi:["एडवर्स इवेंट","दुष्प्रभाव, चाहे दवा से हुए हों या नहीं, दर्ज किए जाते हैं"],
+   kn:["ಅಡ್ವರ್ಸ್ ಇವೆಂಟ್","ಅಡ್ಡಪರಿಣಾಮಗಳು — ಔಷಧದಿಂದಲೇ ಆಗಿರಲಿ ಇಲ್ಲದಿರಲಿ ದಾಖಲಿಸಲಾಗುತ್ತದೆ"]},
+  {id:"pk",    re:/pharmacokinetic/i,
+   en:["Pharmacokinetics","how the body absorbs, spreads and clears the drug"],
+   hi:["फार्माकोकाइनेटिक्स","शरीर दवा को कैसे सोखता, फैलाता और बाहर निकालता है"],
+   kn:["ಫಾರ್ಮಾಕೊಕೈನೆಟಿಕ್ಸ್","ದೇಹ ಔಷಧವನ್ನು ಹೇಗೆ ಹೀರುತ್ತದೆ, ಹರಡುತ್ತದೆ, ಹೊರಹಾಕುತ್ತದೆ"]},
+  {id:"ep",    re:/primary (endpoint|outcome)/i,
+   en:["Primary endpoint","the one main result the study is set up to measure"],
+   hi:["प्राइमरी एंडपॉइंट","वह एक मुख्य नतीजा जिसे मापने के लिए अध्ययन बना है"],
+   kn:["ಪ್ರೈಮರಿ ಎಂಡ್‌ಪಾಯಿಂಟ್","ಅಧ್ಯಯನ ಅಳೆಯಲು ಹೊರಟಿರುವ ಮುಖ್ಯ ಫಲಿತಾಂಶ"]},
+  {id:"soc",   re:/standard of care|active comparator/i,
+   en:["Standard of care","the treatment you would normally be given anyway"],
+   hi:["स्टैंडर्ड ऑफ़ केयर","वह इलाज जो आपको वैसे भी सामान्य रूप से मिलता"],
+   kn:["ಸ್ಟ್ಯಾಂಡರ್ಡ್ ಆಫ್ ಕೇರ್","ಸಾಮಾನ್ಯವಾಗಿ ನಿಮಗೆ ಕೊಡಲಾಗುತ್ತಿದ್ದ ಚಿಕಿತ್ಸೆ"]}
 ];
 
-function simplifySummary(text){
-  if(!text) return '';
-  let s=text;
-  for(const [p,r] of JARGON) s=s.replace(p,r);
-  return s.split(/(?<=[.!?])\s+/).filter(x=>x.length>15).slice(0,3).join(' ');
+function summaryOf(text){
+  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  const sentences = raw.split(/(?<=[.!?])\s+/).filter(x => x.length > 20);
+  const shown = sentences.slice(0, 3).join(" ");
+  const hits = GLOSSARY.filter(g => g.re.test(raw)).slice(0, 5);
+  return {text: shown, terms: hits};
 }
 
-function parseEligibility(raw){
-  if(!raw) return {inclusion:[],exclusion:[]};
-  const lines=raw.split('\n').map(l=>l.trim()).filter(l=>l.length>10);
-  let mode='inclusion';
-  const inclusion=[],exclusion=[];
-  for(const line of lines){
-    const low=line.toLowerCase();
-    if(low.match(/exclusion criteria|must not|cannot|not eligible|are excluded/)){mode='exclusion';continue;}
-    if(low.match(/inclusion criteria|must have|must be|are eligible|eligible if/)){mode='inclusion';continue;}
-    if(low.match(/^(inclusion|exclusion|criteria|eligibility)[\s:]*$/)) continue;
-    const clean=line.replace(/^[-•*·\d.]+\s*/,'').trim();
-    if(clean.length<10) continue;
-    if(mode==='inclusion'&&inclusion.length<4) inclusion.push(clean);
-    if(mode==='exclusion'&&exclusion.length<2) exclusion.push(clean);
+function criteria(raw){
+  const inc = [], exc = [];
+  if (!raw) return {inc, exc, more: false};
+  let mode = "inc", count = 0;
+  for (let line of String(raw).split(/\r?\n/)){
+    line = line.replace(/^[\s*•·–—-]+/, "").replace(/^\d+[.)]\s*/, "").trim();
+    if (!line) continue;
+    const low = line.toLowerCase();
+    if (/^exclusion\s*criteria/.test(low)){ mode = "exc"; continue; }
+    if (/^(key\s+)?inclusion\s*criteria/.test(low)){ mode = "inc"; continue; }
+    if (/^(eligibility|criteria|inclusion|exclusion)\s*:?\s*$/.test(low)) continue;
+    if (line.length < 12) continue;
+    count++;
+    if (mode === "inc" && inc.length < 4) inc.push(line);
+    else if (mode === "exc" && exc.length < 3) exc.push(line);
   }
-  return {inclusion,exclusion};
+  return {inc, exc, more: count > inc.length + exc.length};
 }
 
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
+function ageText(s){
+  const e = get(P(s), "eligibilityModule", {}) || {};
+  const min = e.minimumAge, max = e.maximumAge;
+  if (min && max) return `${min} – ${max}`;
+  if (min) return `${min}+`;
+  if (max) return `up to ${max}`;
+  return "Any age";
+}
+function sexText(s){
+  const x = get(P(s), "eligibilityModule.sex", "ALL");
+  return x === "FEMALE" ? "Women" : x === "MALE" ? "Men" : "Anyone";
 }
 
-function renderCard(trial,index){
-  const L=LANG[currentLang];
-  const id=trial.protocolSection?.identificationModule?.nctId||'';
-  const title=trial.protocolSection?.identificationModule?.briefTitle||'Untitled Trial';
-  const status=trial.protocolSection?.statusModule?.overallStatus||'';
-  const phases=trial.protocolSection?.designModule?.phases||[];
-  const phaseText=phases.join('/')||'N/A';
-  const conditions=trial.protocolSection?.conditionsModule?.conditions||[];
-  const sponsor=trial.protocolSection?.sponsorCollaboratorsModule?.leadSponsor?.name||'N/A';
-  const enrollment=trial.protocolSection?.designModule?.enrollmentInfo?.count||'N/A';
-  const startDate=trial.protocolSection?.statusModule?.startDateStruct?.date||'N/A';
-  const rawBrief=trial.protocolSection?.descriptionModule?.briefSummary||'';
-  const rawElig=trial.protocolSection?.eligibilityModule?.eligibilityCriteria||'';
-  const locations=extractIndia(trial.protocolSection?.contactsLocationsModule?.locations||[]);
-  const ctUrl=`https://clinicaltrials.gov/study/${id}`;
-  const summary=simplifySummary(rawBrief)||'See the full trial page for details.';
-  const elig=parseEligibility(rawElig);
-  const hasIndiaSites=locations.length>0;
-
-  let eligHTML='';
-  if(elig.inclusion.length||elig.exclusion.length){
-    const inc=elig.inclusion.map(i=>`<div class="elig-item"><span class="ei ok">✔</span><span>${i}</span></div>`).join('');
-    const exc=elig.exclusion.map(i=>`<div class="elig-item"><span class="ei no">✖</span><span>${i}</span></div>`).join('');
-    const more=rawElig.length>200?`<div class="more-note">${L.moreElig}</div>`:'';
-    eligHTML=`<div class="elig-box"><div class="box-label">👥 ${L.eligLabel}</div><div class="elig-list">${inc}${exc}${more}</div></div>`;
+function distanceKm(a, b){
+  const R = 6371, rad = d => d * Math.PI / 180;
+  const dLat = rad(b.lat - a.lat), dLon = rad(b.lon - a.lon);
+  const h = Math.sin(dLat/2)**2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon/2)**2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+function nearestKm(s){
+  if (!S.here) return Infinity;
+  let best = Infinity;
+  for (const l of indiaSites(s)){
+    const g = l.geoPoint;
+    if (g && typeof g.lat === "number" && typeof g.lon === "number"){
+      best = Math.min(best, distanceKm(S.here, {lat: g.lat, lon: g.lon}));
+    }
   }
-
-  const card=document.createElement('div');
-  card.className='trial-card'+(hasIndiaSites?' has-india-sites':'');
-  card.setAttribute('role','listitem');
-  card.style.animationDelay=`${index*0.06}s`;
-  card.dataset.hasIndiaSites=hasIndiaSites?'1':'0';
-  card.innerHTML=`
-    <div class="card-top">
-      <div style="flex:1;min-width:0">
-        <div class="trial-id">${id}${conditions.length?' · '+conditions.slice(0,2).join(', '):''}</div>
-        <div class="trial-title">${title}</div>
-      </div>
-      <div class="card-badges">
-        <span class="phase-badge ${getPhaseClass(phaseText)}">Phase ${phaseText}</span>
-        <span class="status-pill ${getStatusClass(status)}">${formatStatus(status)}</span>
-      </div>
-    </div>
-    <div class="summary-box">
-      <div class="box-label">📋 ${L.summaryLabel}</div>
-      <div class="summary-text">${summary}</div>
-    </div>
-    ${eligHTML}
-    <div class="meta-grid">
-      <div class="meta-item"><div class="meta-key">Sponsor</div><div class="meta-val">${sponsor.length>34?sponsor.slice(0,34)+'…':sponsor}</div></div>
-      <div class="meta-item"><div class="meta-key">Participants</div><div class="meta-val">${enrollment}</div></div>
-      <div class="meta-item"><div class="meta-key">Start Date</div><div class="meta-val">${startDate}</div></div>
-      <div class="meta-item"><div class="meta-key">India Sites</div><div class="meta-val">${hasIndiaSites?locations.length+' site(s)':'See trial page'}</div></div>
-    </div>
-    ${hasIndiaSites?`<div class="locations-list">${locations.map(l=>`<span class="loc-tag">📍 ${l}</span>`).join('')}</div>`:''}
-    <div class="card-actions">
-      <a href="${ctUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary-sm">${L.viewTrial}</a>
-      <button class="btn-outline" onclick="copyTrial('${id}','${title.replace(/'/g,"\\'").replace(/"/g,'&quot;')}','${ctUrl}')">${L.copyBtn}</button>
-    </div>`;
-  return card;
+  return best;
 }
 
-/* ══════════════════════════════════════════════════════
-   INDIA SITES FILTER
-══════════════════════════════════════════════════════ */
-function toggleIndiaFilter(){
-  if(!allStudies.length){ showToast('Search for trials first'); return; }
-  indiaFilterActive=!indiaFilterActive;
-  applyIndiaFilter();
+/* ── The registry call ─────────────────────────────────── */
+async function fetchPage(term, token, signal){
+  const p = new URLSearchParams({
+    "query.cond": term,
+    "query.locn": "India",     // the actual fix: ask for India, not a
+                               // 3000 km circle that reaches Indonesia
+    "pageSize": String(CONFIG.pageSize),
+    "format": "json",
+    "fields": "protocolSection"
+  });
+  // countTotal is only valid on the first page of a result set
+  if (!token) p.set("countTotal", "true"); else p.set("pageToken", token);
+  const status = $("fStatus").value;
+  if (status) p.set("filter.overallStatus", status.split("|").join(","));
+
+  const res = await fetch(`${CONFIG.api}?${p.toString()}`, {signal});
+  if (!res.ok) throw new Error(`Registry returned ${res.status}`);
+  return res.json();
 }
 
-function clearIndiaFilter(){
-  indiaFilterActive=false;
-  applyIndiaFilter();
-}
+/* ── Search ────────────────────────────────────────────── */
+async function search(reset = true){
+  const raw = $("q").value.trim();
+  if (!raw){ toast(L().errEmpty); $("q").focus(); return; }
 
-function applyIndiaFilter(){
-  const L=LANG[currentLang];
-  const card=document.getElementById('indiaSitesCard');
-  const banner=document.getElementById('indiaFilterBanner');
-  const hint=document.getElementById('indiaSitesHint');
-  const grid=document.getElementById('resultsGrid');
+  if (S.ctrl) S.ctrl.abort();
+  S.ctrl = new AbortController();
+  const signal = S.ctrl.signal;
 
-  card.classList.toggle('active-filter', indiaFilterActive);
-  card.setAttribute('aria-pressed', indiaFilterActive?'true':'false');
-  banner.classList.toggle('show', indiaFilterActive);
-  hint.textContent = indiaFilterActive ? '✕ Clear filter' : 'Click to filter ↑';
-
-  // Also apply class to grid for CSS cascade (loc-tag color change)
-  grid.classList.toggle('india-filter-active', indiaFilterActive);
-
-  // Show/hide cards
-  const cards=grid.querySelectorAll('.trial-card');
-  let visibleCount=0;
-  cards.forEach(c=>{
-    const hasIndia=c.dataset.hasIndiaSites==='1';
-    if(!indiaFilterActive||hasIndia){
-      c.style.display=''; visibleCount++;
+  if (reset){
+    const r = resolveTerm(raw);
+    S.term = r.term; S.studies = []; S.token = null; S.total = null;
+    $("list").innerHTML = "";
+    $("bar").classList.remove("on");
+    $("empty").classList.remove("on");
+    $("more").classList.remove("on");
+    if (r.changed && normalize(raw) !== r.term.toLowerCase()){
+      $("undText").innerHTML = L().understood(esc(raw), esc(r.term));
+      $("und").classList.add("on");
     } else {
-      c.style.display='none';
+      $("und").classList.remove("on");
     }
-  });
-
-  if(indiaFilterActive){
-    showToast(`📍 ${visibleCount} trial${visibleCount!==1?'s':''} with India sites`);
-  } else {
-    showToast(`Showing all ${allStudies.length} trials`);
+    remember(raw);
   }
 
-  // Show empty state if nothing matches
-  const emptyState=document.getElementById('emptyState');
-  if(indiaFilterActive && visibleCount===0){
-    emptyState.style.display='block';
-    document.getElementById('emptyTitle').textContent='No trials with India sites';
-    document.getElementById('emptyText').textContent='These trials may not have confirmed India locations in their registry data.';
-  } else {
-    emptyState.style.display='none';
-  }
-}
+  S.busy = true;
+  $("go").disabled = true; $("go").textContent = L().going;
+  $("working").classList.add("on");
 
-/* ══════════════════════════════════════════════════════
-   COPY UTILITY
-══════════════════════════════════════════════════════ */
-function copyTrial(id,title,url){
-  navigator.clipboard.writeText(`Clinical Trial: ${title}\nID: ${id}\nLink: ${url}`)
-    .then(()=>showToast('✅ Copied to clipboard!'))
-    .catch(()=>showToast('⚠️ Copy failed'));
-}
-
-const CTGOV='https://clinicaltrials.gov/api/v2/studies';
-
-async function searchTrials(){
-  const L=LANG[currentLang];
-  const rawInput=document.getElementById('diseaseInput').value.trim();
-  if(!rawInput){showToast('Please type a disease or symptom');return;}
-
-  // Reset India filter on new search
-  indiaFilterActive=false;
-  allStudies=[];
-  document.getElementById('indiaSitesCard').classList.remove('active-filter');
-  document.getElementById('indiaFilterBanner').classList.remove('show');
-  document.getElementById('indiaSitesHint').textContent='Click to filter ↑';
-  document.getElementById('resultsGrid').classList.remove('india-filter-active');
-
-  const resolved=smartResolve(rawInput);
-  const searchTerm=resolved.canonical;
-
-  const banner=document.getElementById('smartBanner');
-  if(resolved.matched&&rawInput.toLowerCase()!==searchTerm.toLowerCase()){
-    document.getElementById('smartText').innerHTML=L.smartMsg(rawInput,searchTerm);
-    banner.classList.add('show');
-  } else {
-    banner.classList.remove('show');
-  }
-
-  const statusFilter=document.getElementById('statusFilter').value;
-  const phaseFilter=document.getElementById('phaseFilter').value;
-  const count=parseInt(document.getElementById('countFilter').value);
-
-  const btn=document.getElementById('searchBtn');
-  btn.disabled=true; btn.textContent=L.searching;
-  document.getElementById('resultsGrid').innerHTML='';
-  document.getElementById('statsRow').style.display='none';
-  document.getElementById('emptyState').style.display='none';
-
-  const bar=document.getElementById('statusBar');
-  bar.style.display='flex';
-  document.getElementById('statusMain').textContent=L.statusMain(searchTerm);
-  document.getElementById('statusSub').textContent=L.statusSub;
-
-  try{
-    const params=new URLSearchParams({
-      'query.cond':searchTerm,'filter.geo':'distance(20.5937,78.9629,3000km)',
-      'pageSize':count,'format':'json','fields':'protocolSection'
-    });
-    if(statusFilter!=='ALL') params.set('filter.overallStatus',statusFilter);
-    if(phaseFilter) params.set('filter.phase',phaseFilter);
-
-    const res=await fetch(`${CTGOV}?${params}`);
-    if(!res.ok) throw new Error(`API error ${res.status}`);
-    const data=await res.json();
-    const studies=data.studies||[];
-
-    if(studies.length===0){
-      bar.style.display='none';
-      document.getElementById('emptyState').style.display='block';
-      btn.disabled=false; btn.textContent=L.btn; return;
+  try {
+    const data = await fetchPage(S.term, reset ? null : S.token, signal);
+    S.lastFetched = new Date();
+    S.studies = S.studies.concat(data.studies || []);
+    S.token = data.nextPageToken || null;
+    if (typeof data.totalCount === "number") S.total = data.totalCount;
+    buildStateFilter();
+    render();
+  } catch (err){
+    if (err.name !== "AbortError"){
+      console.error(err);
+      toast(L().errNet);
+      if (!S.studies.length) $("empty").classList.add("on");
     }
-
-    // Store globally for India Sites filter
-    allStudies=studies;
-
-    const recruiting=studies.filter(s=>s.protocolSection?.statusModule?.overallStatus==='RECRUITING').length;
-    const indiaSites=studies.flatMap(s=>(s.protocolSection?.contactsLocationsModule?.locations||[]).filter(l=>l.country==='India')).length;
-    document.getElementById('statTotal').textContent=studies.length;
-    document.getElementById('statRecruiting').textContent=recruiting;
-    document.getElementById('statSites').textContent=indiaSites;
-    document.getElementById('statsRow').style.display='flex';
-
-    const grid=document.getElementById('resultsGrid');
-    studies.forEach((s,i)=>grid.appendChild(renderCard(s,i)));
-    bar.style.display='none';
-  } catch(err){
-    bar.style.display='none';
-    showToast('❌ '+err.message);
-    console.error(err);
+  } finally {
+    S.busy = false;
+    $("go").disabled = false; $("go").textContent = L().go;
+    $("working").classList.remove("on");
   }
-  btn.disabled=false; btn.textContent=L.btn;
 }
 
-/* Keyboard support */
-document.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('diseaseInput').addEventListener('keydown',e=>{
-    if(e.key==='Enter') searchTrials();
+/* ── Filtering + ordering happen here, on what we hold ──── */
+function visible(){
+  const wantPhase = $("fPhase").value;
+  const wantState = $("fState").value;
+  const indiaOnly = $("indiaOnly").checked;
+  const order     = $("fSort").value;
+
+  let out = S.studies.filter(s => {
+    const sites = indiaSites(s);
+    if (indiaOnly && !sites.length) return false;
+    if (wantPhase && phaseOf(s) !== wantPhase) return false;
+    if (wantState && !sites.some(l => (l.state || "") === wantState)) return false;
+    return true;
   });
-  document.querySelectorAll('.tag').forEach(tag=>{
-    tag.addEventListener('keydown',e=>{
-      if(e.key==='Enter'||e.key===' ') e.currentTarget.click();
-    });
-  });
-  // Keyboard support for India Sites card
-  document.getElementById('indiaSitesCard').addEventListener('keydown',e=>{
-    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleIndiaFilter(); }
-  });
+
+  if (order === "sites"){
+    out = out.slice().sort((a,b) => indiaSites(b).length - indiaSites(a).length);
+  } else if (order === "near" && S.here){
+    out = out.slice().sort((a,b) => nearestKm(a) - nearestKm(b));
+  }
+  return out;
+}
+
+function buildStateFilter(){
+  const sel = $("fState");
+  const keep = sel.value;
+  const states = new Set();
+  for (const s of S.studies) for (const l of indiaSites(s)) if (l.state) states.add(l.state);
+  sel.innerHTML = `<option value="">${esc(L().anywhere)}</option>` +
+    [...states].sort().map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join("");
+  if ([...states].includes(keep)) sel.value = keep;
+}
+
+function render(){
+  const rows = visible();
+  const list = $("list");
+  list.innerHTML = "";
+
+  if (!rows.length){
+    $("bar").classList.remove("on");
+    $("empty").classList.add("on");
+    $("more").classList.toggle("on", !!S.token);
+    return;
+  }
+  $("empty").classList.remove("on");
+  $("bar").classList.add("on");
+  $("barN").innerHTML = esc(L().showing(rows.length, S.total));
+  $("resultUpdated").textContent = S.lastFetched ? L().checked(S.lastFetched) : "";
+
+  const frag = document.createDocumentFragment();
+  rows.forEach(s => frag.appendChild(card(s)));
+  list.appendChild(frag);
+  $("more").classList.toggle("on", !!S.token);
+  $("more").textContent = L().more;
+}
+
+/* ── One trial ─────────────────────────────────────────── */
+function card(s){
+  const t   = L();
+  const ps  = P(s);
+  const id  = get(ps, "identificationModule.nctId", "");
+  const title = get(ps, "identificationModule.briefTitle", "Untitled study");
+  const st  = get(ps, "statusModule.overallStatus", "UNKNOWN");
+  const bucket = statusBucket(st);
+  const conds = (get(ps, "conditionsModule.conditions", []) || []).slice(0, 4);
+  const sponsor = get(ps, "sponsorCollaboratorsModule.leadSponsor.name", "—");
+  const enrol = get(ps, "designModule.enrollmentInfo.count", null);
+  const start = get(ps, "statusModule.startDateStruct.date", "—");
+  const brief = summaryOf(get(ps, "descriptionModule.briefSummary", ""));
+  const invs  = (get(ps, "armsInterventionsModule.interventions", []) || []).slice(0, 5);
+  const crit  = criteria(get(ps, "eligibilityModule.eligibilityCriteria", ""));
+  const sites = indiaSites(s);
+  const central = (get(ps, "contactsLocationsModule.centralContacts", []) || []);
+  const url   = `https://clinicaltrials.gov/study/${encodeURIComponent(id)}`;
+  const healthy = get(ps, "eligibilityModule.healthyVolunteers", false);
+
+  const el = document.createElement("article");
+  el.className = "trial";
+  el.dataset.state = bucket;
+  el.dataset.nct = id;
+
+  const siteHTML = sites.length
+    ? sites.slice(0, 6).map(l => {
+        const c = (l.contacts || []).find(x => x && (x.phone || x.email));
+        const where = [l.city, l.state].filter(Boolean).join(", ");
+        return `<div class="site">
+          <div class="site-main"><div class="site-where">${esc(where || "India")}</div>
+          ${l.facility ? `<div class="site-fac">${esc(l.facility)}</div>` : ""}
+          ${c ? `<div class="site-call">
+              ${c.phone ? `<a class="call-btn" href="tel:${esc(String(c.phone).replace(/[^\d+]/g,""))}">📞 ${esc(c.phone)}</a>` : ""}
+              ${c.email ? `<a href="mailto:${esc(c.email)}">✉ ${esc(c.email)}</a>` : ""}
+            </div>` : ""}
+          </div></div>`;
+      }).join("") + (sites.length > 6 ? `<p class="small">+ ${sites.length - 6} more in the full record</p>` : "")
+    : "";
+
+  const centralHTML = (!sites.some(l => (l.contacts||[]).some(c => c && (c.phone || c.email))) && central.length)
+    ? `<div class="site">
+         <div class="site-where">${esc(central[0].name || "Study contact")}</div>
+         <div class="site-call">
+           ${central[0].phone ? `<a class="call-btn" href="tel:${esc(String(central[0].phone).replace(/[^\d+]/g,""))}">📞 ${esc(central[0].phone)}</a>` : ""}
+           ${central[0].email ? `<a href="mailto:${esc(central[0].email)}">✉ ${esc(central[0].email)}</a>` : ""}
+         </div>
+       </div>` : "";
+
+  el.innerHTML = `
+    <div class="t-head"><span class="t-status">${esc(t.status[st] || t.status.UNKNOWN)}</span><span class="nct">${esc(id)}</span></div>
+    <h2 class="t-title">${esc(title)}</h2>
+    ${conds.length ? `<div class="t-conds">${conds.map(c => `<span class="t-cond">${esc(c)}</span>`).join("")}</div>` : ""}
+    <p class="t-phase">${esc(t.phase[phaseOf(s)])}</p>
+
+    ${brief.text ? `<div class="block"><h3>${esc(t.about)}</h3><p>${esc(brief.text)}</p>${
+      brief.terms.length ? `<dl class="gloss"><dt class="gloss-h">${esc(t.words)}</dt>${
+        brief.terms.map(g => {
+          const [w, m] = g[S.lang] || g.en;
+          return `<dd><b>${esc(w)}</b> — ${esc(m)}</dd>`;
+        }).join("")
+      }</dl>` : ""
+    }</div>` : ""}
+
+    ${invs.length ? `<div class="block"><h3>${esc(t.testing)}</h3><ul>${
+      invs.map(i => `<li>${esc([i.name, i.type && i.type !== "OTHER" ? `(${i.type.toLowerCase()})` : ""].filter(Boolean).join(" "))}</li>`).join("")
+    }</ul></div>` : ""}
+
+    ${(crit.inc.length || crit.exc.length) ? `<div class="block"><h3>${esc(t.whoCan)}</h3><ul>${
+      crit.inc.map(x => `<li class="yes">${esc(x)}</li>`).join("") +
+      crit.exc.map(x => `<li class="no">${esc(x)}</li>`).join("")
+    }</ul>${crit.more ? `<p class="small">${esc(t.moreCriteria)}</p>` : ""}</div>` : ""}
+
+    <dl class="facts">
+      <div class="fact"><dt>${esc(t.facts.age)}</dt><dd>${esc(ageText(s))}</dd></div>
+      <div class="fact"><dt>${esc(t.facts.sex)}</dt><dd>${esc(sexText(s))}</dd></div>
+      <div class="fact"><dt>${esc(t.facts.healthy)}</dt><dd>${healthy ? "Yes" : "No"}</dd></div>
+      <div class="fact"><dt>${esc(t.facts.people)}</dt><dd>${enrol != null ? esc(enrol) : "—"}</dd></div>
+      <div class="fact"><dt>${esc(t.facts.start)}</dt><dd>${esc(start)}</dd></div>
+      <div class="fact"><dt>${esc(t.facts.sponsor)}</dt><dd>${esc(sponsor.length > 40 ? sponsor.slice(0,40) + "…" : sponsor)}</dd></div>
+    </dl>
+
+    <div class="sites">
+      <h3>${esc(sites.length ? t.sitesH(sites.length) : "Contact")}</h3>
+      ${siteHTML || ""}
+      ${centralHTML}
+      ${(!siteHTML && !centralHTML) ? `<p class="no-sites">${esc(t.noSites)}</p>` : ""}
+    </div>
+
+    <div class="acts">
+      <a class="act main" href="${esc(url)}" target="_blank" rel="noopener">${esc(t.open)}</a>
+      ${CONFIG.aiEndpoint ? `<button class="act ai" data-act="explain">${esc(t.explain)}</button>` : ""}
+      <button class="act" data-act="share">${esc(t.share)}</button>
+      <button class="act" data-act="copy">${esc(t.copy)}</button>
+      <button class="act" data-act="print">${esc(t.print)}</button>
+    </div>
+    <div class="ai-out" id="ai-${esc(id)}"></div>
+  `;
+  return el;
+}
+
+/* ── Card actions ──────────────────────────────────────── */
+function plainTextFor(el){
+  const nct   = el.dataset.nct;
+  const title = el.querySelector(".t-title").textContent.trim();
+  const state = el.querySelector(".t-status").textContent.trim();
+  const where = [...el.querySelectorAll(".site-where")].slice(0,3).map(x => x.textContent.trim()).join(" / ");
+  const phone = el.querySelector('a[href^="tel:"]');
+  return [
+    title,
+    `Status: ${state}`,
+    where ? `Where: ${where}` : "",
+    phone ? `Phone: ${phone.textContent.replace(/^📞\s*/,"")}` : "",
+    `Full record: https://clinicaltrials.gov/study/${nct}`,
+    "",
+    "Shared from ClinicalTrials India Finder. Show this to your doctor."
+  ].filter(Boolean).join("\n");
+}
+
+document.addEventListener("click", async e => {
+  const btn = e.target.closest("[data-act]");
+  if (!btn) return;
+  const el = btn.closest(".trial");
+  const act = btn.dataset.act;
+
+  if (act === "copy"){
+    try { await navigator.clipboard.writeText(plainTextFor(el)); toast(L().copied); }
+    catch { toast("Copy blocked by the browser."); }
+  }
+  if (act === "share"){
+    const text = plainTextFor(el);
+    if (navigator.share){ try { await navigator.share({text}); return; } catch { /* user cancelled */ } }
+    window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");
+  }
+  if (act === "print"){
+    document.body.classList.add("printing");
+    el.classList.add("printing");
+    window.print();
+    setTimeout(() => { document.body.classList.remove("printing"); el.classList.remove("printing"); }, 400);
+  }
+  if (act === "explain") explain(el, btn);
 });
+
+/* ── Optional AI layer ─────────────────────────────────── */
+async function explain(el, btn){
+  if (!CONFIG.aiEndpoint) return;
+  const out = el.querySelector(".ai-out");
+  const t = L();
+  out.classList.add("on");
+  out.innerHTML = `<span class="ai-tag">${esc(t.aiTag)}</span>${esc(t.aiThinking)}`;
+  btn.disabled = true;
+  try {
+    const res = await fetch(CONFIG.aiEndpoint, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        task: "explain",
+        lang: S.lang,
+        nct: el.dataset.nct,
+        title: el.querySelector(".t-title").textContent.trim(),
+        summary: (el.querySelector(".block p") || {textContent:""}).textContent.trim().slice(0, 2500),
+        criteria: [...el.querySelectorAll(".block li")].map(x => x.textContent.trim()).join("\n").slice(0, 2500)
+      })
+    });
+    if (!res.ok) throw new Error(String(res.status));
+    const data = await res.json();
+    out.innerHTML = `<span class="ai-tag">${esc(t.aiTag)}</span>${esc(data.text || "")}`;
+  } catch (err){
+    console.error(err);
+    out.innerHTML = `<span class="ai-tag">${esc(t.aiTag)}</span>Could not generate an explanation right now.`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+/* ── Recent searches (this device only) ────────────────── */
+function remember(q){
+  try {
+    const prev = JSON.parse(localStorage.getItem("ctin.recent") || "[]");
+    const next = [q, ...prev.filter(x => x.toLowerCase() !== q.toLowerCase())].slice(0, 5);
+    localStorage.setItem("ctin.recent", JSON.stringify(next));
+    paintRecent();
+  } catch { /* private mode, storage full — not important */ }
+}
+function paintRecent(){
+  let items = [];
+  try { items = JSON.parse(localStorage.getItem("ctin.recent") || "[]"); } catch { return; }
+  const box = $("recent");
+  if (!items.length){ box.classList.remove("on"); return; }
+  box.classList.add("on");
+  box.innerHTML = `<span>${esc(L().recentLabel)}</span>` +
+    items.map(x => `<button data-recent="${esc(x)}">${esc(x)}</button>`).join("");
+}
+
+/* ── Live count in the hero ────────────────────────────── */
+async function liveCount(){
+  try {
+    const p = new URLSearchParams({
+      "query.locn": "India", "pageSize": "1", "countTotal": "true",
+      "format": "json", "filter.overallStatus": "RECRUITING"
+    });
+    const res = await fetch(`${CONFIG.api}?${p.toString()}`);
+    if (!res.ok) throw new Error();
+    const d = await res.json();
+    if (typeof d.totalCount !== "number") throw new Error();
+    $("liveN").textContent = d.totalCount.toLocaleString("en-IN");
+    $("live").dataset.state = "ok";
+  } catch { $("live").dataset.state = "failed"; }
+}
+
+/* ── Language + theme ──────────────────────────────────── */
+function setLang(code){
+  S.lang = code;
+  const t = L();
+  document.documentElement.lang = code;
+  $("h1").textContent = t.h1;
+  $("lede").textContent = t.lede;
+  $("liveT").textContent = t.liveT;
+  $("qLabel").textContent = t.qLabel;
+  $("qHint").textContent = t.qHint;
+  $("q").placeholder = t.ph;
+  $("go").textContent = t.go;
+  $("commonLabel").textContent = t.commonLabel;
+  $("lStatus").textContent = t.lStatus;
+  $("lPhase").textContent = t.lPhase;
+  $("lState").textContent = t.lState;
+  $("lSort").textContent = t.lSort;
+  $("indiaOnlyLabel").textContent = t.indiaOnlyLabel;
+  $("workingText").textContent = t.working;
+  $("emptyH").textContent = t.emptyH;
+  $("emptyP").textContent = t.emptyP;
+  $("more").textContent = t.more;
+  document.querySelectorAll(".lang").forEach(b =>
+    b.setAttribute("aria-pressed", b.dataset.lang === code ? "true" : "false"));
+  try { localStorage.setItem("ctin.lang", code); } catch {}
+  paintRecent();
+  if (S.studies.length) render();
+}
+function setTheme(mode){
+  document.documentElement.dataset.theme = mode;
+  try { localStorage.setItem("ctin.theme", mode); } catch {}
+}
+
+/* ── Toast ─────────────────────────────────────────────── */
+let toastTimer;
+function toast(msg){
+  const el = $("toast");
+  el.textContent = msg;
+  el.classList.add("on");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("on"), 3000);
+}
+
+/* ── Wiring ────────────────────────────────────────────── */
+$("go").addEventListener("click", () => search(true));
+$("q").addEventListener("keydown", e => { if (e.key === "Enter") search(true); });
+$("more").addEventListener("click", () => { if (!S.busy) search(false); });
+$("undX").addEventListener("click", () => $("und").classList.remove("on"));
+$("indiaOnly").addEventListener("change", render);
+$("fPhase").addEventListener("change", render);
+$("fState").addEventListener("change", render);
+$("fStatus").addEventListener("change", () => { if (S.studies.length) search(true); });
+
+$("fSort").addEventListener("change", () => {
+  if ($("fSort").value !== "near" || S.here){ render(); return; }
+  if (!navigator.geolocation){ toast(L().nearFail); $("fSort").value = "relevance"; return; }
+  navigator.geolocation.getCurrentPosition(
+    pos => { S.here = {lat: pos.coords.latitude, lon: pos.coords.longitude}; toast(L().nearOn); render(); },
+    ()  => { toast(L().nearFail); $("fSort").value = "relevance"; },
+    {timeout: 8000, maximumAge: 600000}
+  );
+});
+
+document.querySelectorAll(".chip").forEach(c =>
+  c.addEventListener("click", () => { $("q").value = c.dataset.q; search(true); }));
+
+$("recent").addEventListener("click", e => {
+  const b = e.target.closest("[data-recent]");
+  if (!b) return;
+  $("q").value = b.dataset.recent;
+  search(true);
+});
+
+document.querySelectorAll(".lang").forEach(b =>
+  b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+$("themeBtn").addEventListener("click", () => {
+  const now = document.documentElement.dataset.theme;
+  const dark = now ? now === "dark"
+    : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  setTheme(dark ? "light" : "dark");
+});
+
+$("resetFilters").addEventListener("click", () => {
+  $("fStatus").value = "RECRUITING|NOT_YET_RECRUITING";
+  $("fPhase").value = "";
+  $("fState").value = "";
+  $("fSort").value = "relevance";
+  $("indiaOnly").checked = true;
+  if (S.studies.length) search(true);
+});
+
+$("emptyWiden").addEventListener("click", () => { $("fStatus").value = ""; search(true); });
+$("emptyClear").addEventListener("click", () => { $("indiaOnly").checked = false; render(); });
+
+/* ── Start ─────────────────────────────────────────────── */
+(function init(){
+  $("vstamp").textContent = "v" + CONFIG.version;
+  $("vfoot").textContent  = `Version ${CONFIG.version} · updated ${CONFIG.updated} · production build`;
+  try {
+    const th = localStorage.getItem("ctin.theme"); if (th) setTheme(th);
+    const lg = localStorage.getItem("ctin.lang");  if (lg && I18N[lg]) setLang(lg);
+  } catch {}
+  paintRecent();
+  liveCount();
+  const q = new URLSearchParams(location.search).get("q");
+  if (q){ $("q").value = q; search(true); }
+})();
 </script>
 </body>
 </html>
